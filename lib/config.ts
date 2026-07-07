@@ -1,65 +1,56 @@
-// lib/config.ts
+// =========================================================================
+// 🌟 إعدادات المشروع (غير الروابط من هنا فقط) 🌟
+// =========================================================================
 
-/**
- * Global Configuration File
- * 
- * You can change these variables here to update the URLs across the entire application.
- * Alternatively, you can set the corresponding environment variables in your .env.local file.
- */
+// 1. رابط الفرونت إند (الموقع نفسه)
+const FRONTEND_URL_LOCAL = 'http://localhost:3000';
+const FRONTEND_URL_PROD = 'https://smartfolio-ten.vercel.app';
 
-// Check if the app is running in production
-const isProd = process.env.NODE_ENV === 'production';
+// 2. رابط الباك إند (السيرفر)
+const BACKEND_URL_LOCAL = 'http://localhost:5000'; 
+const BACKEND_URL_PROD = 'https://smart-folio-backend.vercel.app';
 
-// 1. The base URL for the frontend application
-// You can use a normal full link here (e.g. https://smartfolio-ten.vercel.app)
-export const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || (isProd ? 'https://smartfolio-ten.vercel.app' : 'http://localhost:3000');
+// 3. وضع التشغيل (التحكم اليدوي)
+// لو عايز تجبر المشروع يشتغل بروابط الـ Production وأنت على جهازك (Localhost)، غير دي لـ true
+const FORCE_PRODUCTION = false; 
 
-// Derived domain for middleware routing
+// =========================================================================
+// ⚙️ أكواد التشغيل (لا تقم بتعديل هذا الجزء) ⚙️
+// =========================================================================
+
+const isProd = FORCE_PRODUCTION || process.env.NODE_ENV === 'production';
+
+export const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || (isProd ? FRONTEND_URL_PROD : FRONTEND_URL_LOCAL);
+export const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || (isProd ? BACKEND_URL_PROD : BACKEND_URL_LOCAL);
+
 export const APP_DOMAIN = (() => {
-  try {
-    return new URL(FRONTEND_URL).host;
-  } catch (e) {
-    return isProd ? 'smartfolio-ten.vercel.app' : 'localhost:3000';
-  }
+  try { return new URL(FRONTEND_URL).host; } 
+  catch (e) { return isProd ? FRONTEND_URL_PROD.replace('https://', '') : 'localhost:3000'; }
 })();
 
-// Derived protocol for UI components
 export const APP_PROTOCOL = (() => {
-  try {
-    return new URL(FRONTEND_URL).protocol.replace(':', '');
-  } catch (e) {
-    return isProd ? 'https' : 'http';
-  }
+  try { return new URL(FRONTEND_URL).protocol.replace(':', ''); } 
+  catch (e) { return isProd ? 'https' : 'http'; }
 })();
 
-// 2. The remote backend URL
-// This is the ONLY place you need to change the backend server link in the codebase.
-export const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://smart-folio-backend.vercel.app';
-
-// 3. The base URL for the backend API
-// During local development, we use '/api' to proxy through Next.js (client-side) to avoid CORS/Cookie issues.
-// Server-side requests need an absolute URL.
-export const API_BASE_URL = process.env.NODE_ENV === 'development'
+// During local development, proxy through Next.js
+export const API_BASE_URL = process.env.NODE_ENV === 'development' && !FORCE_PRODUCTION
   ? (typeof window !== 'undefined' ? '/api' : 'http://localhost:3000/api')
   : `${BACKEND_URL}/api`;
 
-// Helper function to get the full URL for a user's portfolio subdomain
+// URL Generator
 export const getSubdomainUrl = (subdomain: string) => {
   try {
     const url = new URL(FRONTEND_URL);
-    // Vercel's free .vercel.app domains do not support sub-subdomains (e.g. user.app.vercel.app)
-    // If we are using a .vercel.app domain, fallback to path-based routing
     if (url.host.includes('.vercel.app')) {
       return `${url.protocol}//${url.host}/${subdomain}`;
     }
     return `${url.protocol}//${subdomain}.${url.host}`;
   } catch (e) {
-    // Fallback if URL parsing fails
     return `http://${subdomain}.localhost:3000`;
   }
 };
 
-// Helper function to check if a hostname is the root domain or a subdomain
 export const isLocalhost = (hostname: string) => {
   return hostname.includes('localhost');
 };
