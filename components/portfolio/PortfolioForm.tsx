@@ -162,7 +162,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             ) : (
               <Input 
                 label="نص الشعار" 
-                value={data.logo} 
+                value={data.logo || ''} 
                 onChange={(e) => handleChange('logo', e.target.value)} 
                 placeholder="مثال: Portfolify"
               />
@@ -174,14 +174,14 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             {(data.navbarLinks || []).map((link: any, index: number) => (
               <div key={index} className="flex gap-3 items-end p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
                 <div className="flex-1">
-                  <Input label="الاسم" value={link.label} onChange={(e) => {
+                  <Input label="الاسم" value={link.label || ''} onChange={(e) => {
                     const newLinks = [...data.navbarLinks];
                     newLinks[index].label = e.target.value;
                     handleChange('navbarLinks', newLinks);
                   }} />
                 </div>
                 <div className="flex-1">
-                  <Input label="الرابط (URL)" value={link.url} onChange={(e) => {
+                  <Input label="الرابط (URL)" value={link.url || ''} onChange={(e) => {
                     const newLinks = [...data.navbarLinks];
                     newLinks[index].url = e.target.value;
                     handleChange('navbarLinks', newLinks);
@@ -205,7 +205,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-800">
             <Input 
               label="نص زر التواصل السريع (CTA)" 
-              value={data.navbarCtaText} 
+              value={data.navbarCtaText || ''} 
               onChange={(e) => handleChange('navbarCtaText', e.target.value)} 
               placeholder="مثال: Hire Me"
             />
@@ -218,7 +218,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               >
                 <option value="#contact">قسم التواصل (افتراضي)</option>
                 {data.navbarLinks?.map((link: any, i: number) => (
-                  <option key={i} value={link.url}>{link.label} ({link.url})</option>
+                  <option key={i} value={link.url || ''}>{link.label} ({link.url})</option>
                 ))}
               </select>
             </div>
@@ -232,13 +232,13 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Input 
               label="الاسم المهني" 
-              value={data.name} 
+              value={data.name || ''} 
               onChange={(e) => handleChange('name', e.target.value)} 
               placeholder="مثال: أحمد محمد"
             />
             <Input 
               label="المسمى الوظيفي / التخصص" 
-              value={data.jobTitle} 
+              value={data.jobTitle || ''} 
               onChange={(e) => handleChange('jobTitle', e.target.value)} 
               placeholder="مثال: مطور ويب شامل"
             />
@@ -257,7 +257,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             <div className="space-y-4">
               <Input 
                 label="رابط السيرة الذاتية (CV)" 
-                value={data.cvLink} 
+                value={data.cvLink || ''} 
                 onChange={(e) => handleChange('cvLink', e.target.value)} 
                 placeholder="https://drive.google.com/..."
               />
@@ -267,7 +267,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">نبذة عنك (Bio)</label>
             <textarea 
               className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all min-h-[140px] resize-none text-sm"
-              value={data.bio}
+              value={data.bio || ''}
               onChange={(e) => handleChange('bio', e.target.value)}
               placeholder="اكتب نبذة مختصرة عنك وعن خبراتك..."
             />
@@ -291,7 +291,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                 </button>
               </div>
               <Input 
-                value={skill.name} 
+                value={skill.name || ''} 
                 placeholder="اسم المهارة (مثال: React)"
                 onChange={(e) => {
                   const newSkills = [...data.skills];
@@ -301,7 +301,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               />
               <IconPicker 
                 label="الأيقونة"
-                value={skill.icon} 
+                value={skill.icon || ''} 
                 onChange={(val) => {
                   const newSkills = [...data.skills];
                   newSkills[index].icon = val;
@@ -337,7 +337,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <div className="grid grid-cols-1 gap-4 pr-2">
                 <Input 
                   label="اسم الخدمة" 
-                  value={service.title} 
+                  value={service.title || ''} 
                   onChange={(e) => {
                     const newServices = [...data.services];
                     newServices[index].title = e.target.value;
@@ -347,7 +347,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input 
                     label="وصف مختصر للخدمة" 
-                    value={service.description} 
+                    value={service.description || ''} 
                     onChange={(e) => {
                       const newServices = [...data.services];
                       newServices[index].description = e.target.value;
@@ -356,7 +356,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   />
                   <IconPicker 
                     label="الأيقونة"
-                    value={service.icon} 
+                    value={service.icon || ''} 
                     onChange={(val) => {
                       const newServices = [...data.services];
                       newServices[index].icon = val;
@@ -390,7 +390,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <div className="grid grid-cols-1 gap-5">
                 <Input 
                   label="عنوان المشروع" 
-                  value={project.title} 
+                  value={project.title || ''} 
                   onChange={(e) => {
                     const newProjects = [...data.projects];
                     newProjects[index].title = e.target.value;
@@ -400,7 +400,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Input 
                     label="رابط الصورة (URL)" 
-                    value={project.image} 
+                    value={project.image || ''} 
                     placeholder="https://images.unsplash.com/..."
                     onChange={(e) => {
                       const newProjects = [...data.projects];
@@ -410,7 +410,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   />
                   <Input 
                     label="رابط المعاينة / المصدر" 
-                    value={project.link} 
+                    value={project.link || ''} 
                     placeholder="https://github.com/..."
                     onChange={(e) => {
                       const newProjects = [...data.projects];
@@ -424,7 +424,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   <textarea 
                     className="w-full px-5 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all resize-none text-sm"
                     rows={2}
-                    value={project.description}
+                    value={project.description || ''}
                     onChange={(e) => {
                       const newProjects = [...data.projects];
                       newProjects[index].description = e.target.value;
@@ -435,7 +435,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                 <div className="w-full space-y-2">
                   <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">التقنيات المستخدمة (مفصولة بفاصلة)</label>
                   <Input 
-                    value={project.skills?.join(', ')} 
+                    value={project.skills?.join(', ') || ''} 
                     onChange={(e) => {
                       const newProjects = [...data.projects];
                       newProjects[index].skills = e.target.value.split(',').map((s: string) => s.trim());
@@ -464,20 +464,20 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <Input 
                 label="العنوان (Title)" 
                 placeholder="مثال: Let's work together"
-                value={data.contact?.title}
+                value={data.contact?.title || ''}
                 onChange={(e) => handleChange('contact.title', e.target.value)}
               />
               <Input 
                 label="رقم الهاتف أو الواتساب" 
                 placeholder="مثال: +1234567890"
-                value={data.contact?.phone}
+                value={data.contact?.phone || ''}
                 onChange={(e) => handleChange('contact.phone', e.target.value)}
               />
               <div className="sm:col-span-2">
                 <Input 
                   label="الوصف (Description)" 
                   placeholder="وصف قسم التواصل..."
-                  value={data.contact?.description}
+                  value={data.contact?.description || ''}
                   onChange={(e) => handleChange('contact.description', e.target.value)}
                 />
               </div>
@@ -491,21 +491,21 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <Input 
                 label="عنوان النشرة البريدية" 
                 placeholder="مثال: Subscribe to Newsletter"
-                value={data.newsletter?.title}
+                value={data.newsletter?.title || ''}
                 onChange={(e) => handleChange('newsletter.title', e.target.value)}
               />
               <Input 
                 label="البريد الإلكتروني" 
                 type="email"
                 placeholder="contact@yourdomain.com"
-                value={data.contact?.email}
+                value={data.contact?.email || ''}
                 onChange={(e) => handleChange('contact.email', e.target.value)}
               />
               <div className="sm:col-span-2">
                 <Input 
                   label="وصف النشرة البريدية" 
                   placeholder="اكتب وصف قصير..."
-                  value={data.newsletter?.description}
+                  value={data.newsletter?.description || ''}
                   onChange={(e) => handleChange('newsletter.description', e.target.value)}
                 />
               </div>
@@ -524,31 +524,31 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <Input 
                 label="فيسبوك (Facebook)" 
                 placeholder="https://facebook.com/..."
-                value={data.socialLinks?.facebook}
+                value={data.socialLinks?.facebook || ''}
                 onChange={(e) => handleChange('socialLinks.facebook', e.target.value)}
               />
               <Input 
                 label="تويتر (X / Twitter)" 
                 placeholder="https://twitter.com/..."
-                value={data.socialLinks?.twitter}
+                value={data.socialLinks?.twitter || ''}
                 onChange={(e) => handleChange('socialLinks.twitter', e.target.value)}
               />
               <Input 
                 label="انستجرام (Instagram)" 
                 placeholder="https://instagram.com/..."
-                value={data.socialLinks?.instagram}
+                value={data.socialLinks?.instagram || ''}
                 onChange={(e) => handleChange('socialLinks.instagram', e.target.value)}
               />
               <Input 
                 label="لينكد إن (LinkedIn)" 
                 placeholder="https://linkedin.com/..."
-                value={data.socialLinks?.linkedin}
+                value={data.socialLinks?.linkedin || ''}
                 onChange={(e) => handleChange('socialLinks.linkedin', e.target.value)}
               />
               <Input 
                 label="جيت هب (Github)" 
                 placeholder="https://github.com/..."
-                value={data.socialLinks?.github}
+                value={data.socialLinks?.github || ''}
                 onChange={(e) => handleChange('socialLinks.github', e.target.value)}
               />
             </div>
@@ -561,13 +561,13 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               <Input 
                 label="نبذة عن الموقع (Footer Description)" 
                 placeholder="اكتب جملة قصيرة عنك تظهر في التذييل..."
-                value={data.footer?.description}
+                value={data.footer?.description || ''}
                 onChange={(e) => handleChange('footer.description', e.target.value)}
               />
               <Input 
                 label="حقوق النشر (Copyright)" 
                 placeholder="© 2026 Your Name. All rights reserved."
-                value={data.footer?.copyRight}
+                value={data.footer?.copyRight || ''}
                 onChange={(e) => handleChange('footer.copyRight', e.target.value)}
               />
             </div>
