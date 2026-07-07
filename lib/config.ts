@@ -47,6 +47,11 @@ export const API_BASE_URL = process.env.NODE_ENV === 'development'
 export const getSubdomainUrl = (subdomain: string) => {
   try {
     const url = new URL(FRONTEND_URL);
+    // Vercel's free .vercel.app domains do not support sub-subdomains (e.g. user.app.vercel.app)
+    // If we are using a .vercel.app domain, fallback to path-based routing
+    if (url.host.includes('.vercel.app')) {
+      return `${url.protocol}//${url.host}/${subdomain}`;
+    }
     return `${url.protocol}//${subdomain}.${url.host}`;
   } catch (e) {
     // Fallback if URL parsing fails
