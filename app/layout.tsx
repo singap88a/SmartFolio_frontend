@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { APP_DOMAIN, isLocalhost } from "@/lib/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,17 +31,18 @@ export default async function RootLayout({
   const host = headersList.get('host') || '';
   
   let isSubdomain = false;
-  if (host.includes('localhost')) {
+  if (isLocalhost(host)) {
     const parts = host.split('.');
     if (parts.length > 1 && parts[0] !== 'localhost' && parts[0] !== 'www') {
       isSubdomain = true;
     }
   } else {
-    const mainDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'portfolify.com';
+    const mainDomain = APP_DOMAIN;
     if (host.endsWith(mainDomain) && host !== mainDomain && host !== `www.${mainDomain}`) {
       isSubdomain = true;
     }
   }
+
 
   return (
     <html

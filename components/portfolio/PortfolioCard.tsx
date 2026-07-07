@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Button from '../ui/Button';
+import { APP_DOMAIN, APP_PROTOCOL } from '@/lib/config';
 
 interface PortfolioCardProps {
   id: string;
@@ -13,14 +14,14 @@ interface PortfolioCardProps {
 }
 
 const PortfolioCard = ({ id, name, username, subdomain, updatedAt, templateId, onDelete }: PortfolioCardProps) => {
-  const domain = subdomain ? `${subdomain}.localhost:3000` : `localhost:3000/${username}`;
+  const domain = subdomain ? `${subdomain}.${APP_DOMAIN}` : `${APP_DOMAIN}/${username}`;
   
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-lg font-bold dark:text-white mb-1">{name}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{subdomain ? `${subdomain}.portfolify.com` : `portfolify.me/${username}`}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{domain}</p>
         </div>
         <div className="px-2 py-1 bg-green-50 text-green-600 text-xs font-semibold rounded border border-green-100 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400">
           Published
@@ -32,7 +33,7 @@ const PortfolioCard = ({ id, name, username, subdomain, updatedAt, templateId, o
       </div>
 
       <div className="flex gap-2">
-        <a href={`http://${domain}`} target="_blank" rel="noopener noreferrer" className="flex-1">
+        <a href={`${APP_PROTOCOL}://${domain}`} target="_blank" rel="noopener noreferrer" className="flex-1">
           <Button variant="outline" size="sm" className="w-full">View</Button>
         </a>
         <Link href={`/create?template=${templateId || 'developer'}`} className="flex-1">

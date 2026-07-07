@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { fetchApi } from '@/lib/api';
+import { getSubdomainUrl, APP_DOMAIN } from '@/lib/config';
 import Button from '@/components/ui/Button';
 import { User as UserIcon, Mail, Phone, Calendar, Globe, Camera, Save, AlertCircle, Check, Lock, ArrowRight, LayoutTemplate } from 'lucide-react';
 
@@ -228,17 +229,17 @@ const ProfilePage = () => {
                     className={`w-full pl-10 pr-[140px] py-2.5 bg-slate-50 dark:bg-slate-900/50 border rounded-xl transition-all disabled:opacity-60 ${subdomainError ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500'}`}
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center px-3 border-l border-slate-200 dark:border-slate-800 text-slate-500 bg-slate-100 dark:bg-slate-800 rounded-r-xl text-sm font-medium">
-                    .portfolify.com
+                    .{APP_DOMAIN}
                   </div>
                 </div>
                 {subdomainError && <p className="text-xs text-red-500 mt-2 flex items-center gap-1"><AlertCircle size={12}/>{subdomainError}</p>}
                 
                 {/* Live Link Preview */}
                 {!isEditing && formData.subdomain && (
-                  <a href={`http://${formData.subdomain}.localhost:3000`} target="_blank" rel="noreferrer" className="mt-3 flex items-center justify-between p-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 group hover:bg-indigo-50 dark:hover:bg-indigo-500/20 transition-colors">
+                  <a href={getSubdomainUrl(formData.subdomain)} target="_blank" rel="noreferrer" className="mt-3 flex items-center justify-between p-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 group hover:bg-indigo-50 dark:hover:bg-indigo-500/20 transition-colors">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                      <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-400">http://{formData.subdomain}.localhost:3000</span>
+                      <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-400">{getSubdomainUrl(formData.subdomain)}</span>
                     </div>
                     <ArrowRight size={14} className="text-indigo-500 group-hover:translate-x-1 transition-transform" />
                   </a>

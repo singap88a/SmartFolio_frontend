@@ -93,10 +93,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
         response = await fetchApi('/ai/generate-portfolio-cv', {
           method: 'POST',
           body: formData,
-          // When sending FormData, DO NOT set Content-Type header. fetchApi should handle this or we pass it correctly.
-          // Note: If fetchApi manually sets Content-Type: application/json, it will break FormData.
-          // Let's assume fetchApi in lib/api handles FormData properly.
-        }, true); // Passing true if fetchApi needs a flag for FormData, we'll see if it works. Let's just use standard fetch if fetchApi breaks.
+        });
       }
 
       if (response && response.data) {

@@ -1,8 +1,6 @@
 import React from 'react';
 import DeveloperTemplate from '@/components/templates/DeveloperTemplate';
-
-// In a real app, this would be an API call
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { API_BASE_URL } from '@/lib/config';
 
 const getPortfolioData = async (username: string) => {
   const res = await fetch(`${API_BASE_URL}/portfolio/u/${username}`, {

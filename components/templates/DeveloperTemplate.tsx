@@ -27,10 +27,14 @@ interface TemplateProps {
     services?: { title: string; description: string, icon?: string }[];
     projects?: { title: string; description: string; image?: string; skills?: string[]; link?: string }[];
     socialLinks?: { twitter?: string; linkedin?: string; github?: string; instagram?: string };
-    contact: { email: string; phone: string; address?: string };
+    contact: { email: string; phone: string; address?: string; title?: string; description?: string };
     faqs?: { question: string; answer: string }[];
     testimonials?: { name: string; role: string; content: string; avatar?: string }[];
     themeColor: string;
+    navbarCtaLink?: string;
+    navbarCtaText?: string;
+    newsletter?: { title?: string; description?: string };
+    footer?: { description?: string; copyRight?: string };
   };
 }
 

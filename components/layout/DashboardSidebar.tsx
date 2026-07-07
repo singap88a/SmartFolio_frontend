@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, User, Globe, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { getSubdomainUrl } from '@/lib/config';
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -92,7 +93,7 @@ export default function DashboardSidebar() {
 
           {user?.subdomain && (
             <a 
-              href={`http://${user.subdomain}.localhost:3000`}
+              href={getSubdomainUrl(user.subdomain)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}

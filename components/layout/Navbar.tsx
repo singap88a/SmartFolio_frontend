@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Button from '../ui/Button';
 import { useAuth } from '@/context/AuthContext';
 import { User as UserIcon, LayoutDashboard, LogOut, ChevronDown, Globe } from 'lucide-react';
+import { getSubdomainUrl } from '@/lib/config';
 
 const Navbar = () => {
   const router = useRouter();
@@ -108,7 +109,7 @@ const Navbar = () => {
 
                       {user.subdomain && (
                         <a 
-                          href={`http://${user.subdomain}.localhost:3000`}
+                          href={getSubdomainUrl(user.subdomain)}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setIsOpen(false)}
