@@ -23,6 +23,15 @@ export const APP_DOMAIN = (() => {
   }
 })();
 
+// Derived protocol for UI components
+export const APP_PROTOCOL = (() => {
+  try {
+    return new URL(FRONTEND_URL).protocol.replace(':', '');
+  } catch (e) {
+    return isProd ? 'https' : 'http';
+  }
+})();
+
 // 2. The remote backend URL
 // This is the ONLY place you need to change the backend server link in the codebase.
 export const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://smart-folio-backend.vercel.app';
