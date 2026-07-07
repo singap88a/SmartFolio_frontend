@@ -1,7 +1,19 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+  const pathname = usePathname();
+  
+  // Check if we are on a portfolio route (any route that is not a core platform route)
+  const coreRoutes = ['/', '/login', '/register', '/templates', '/profile', '/create'];
+  const isPortfolioRoute = !coreRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`));
+  
+  if (isPortfolioRoute) {
+    return null;
+  }
+
   return (
     <footer className="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-20">
       <div className="max-w-7xl mx-auto px-6">

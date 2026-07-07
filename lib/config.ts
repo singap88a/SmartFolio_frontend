@@ -12,7 +12,7 @@ const BACKEND_URL_PROD = 'https://smart-folio-backend.vercel.app';
 
 // 3. وضع التشغيل (التحكم اليدوي)
 // لو عايز تجبر المشروع يشتغل بروابط الـ Production وأنت على جهازك (Localhost)، غير دي لـ true
-const FORCE_PRODUCTION = false; 
+const FORCE_PRODUCTION = true; 
 
 // =========================================================================
 // ⚙️ أكواد التشغيل (لا تقم بتعديل هذا الجزء) ⚙️

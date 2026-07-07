@@ -33,6 +33,14 @@ const Navbar = () => {
 
   const defaultAvatar = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
 
+  // Check if we are on a portfolio route (any route that is not a core platform route)
+  const coreRoutes = ['/', '/login', '/register', '/templates', '/profile', '/create'];
+  const isPortfolioRoute = !coreRoutes.some(route => pathname === route || pathname.startsWith(`${route}/`));
+  
+  if (isPortfolioRoute) {
+    return null;
+  }
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50">
       <div className="max-w-7xl mx-auto px-6">
