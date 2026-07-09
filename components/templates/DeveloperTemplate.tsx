@@ -135,7 +135,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
 
       <section id="skills" className="py-20 bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-500 mb-12 flex items-center gap-4">
+          <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-12 flex items-center gap-4">
             Expertise <span className="h-px flex-1 bg-slate-800"></span>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -210,7 +210,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                 <p className="text-slate-400 text-sm mb-6 leading-relaxed">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.skills?.map((s, j) => (
-                    <span key={j} className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-800 text-slate-500 rounded">{s}</span>
+                    <span key={j} className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-800 text-slate-400 rounded">{s}</span>
                   ))}
                 </div>
               </motion.div>
@@ -247,7 +247,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                     <DynamicIcon name="faEnvelope" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">Email Me</p>
+                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Email Me</p>
                     <p className="font-bold text-lg">{data.contact.email}</p>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                     <DynamicIcon name="faPhone" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">Call / WhatsApp</p>
+                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Call / WhatsApp</p>
                     <p className="font-bold text-lg">{data.contact.phone}</p>
                   </div>
                 </div>
@@ -298,7 +298,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                   <img src={data.logo} alt="Logo" className="h-10 rounded" />
                 ) : (
                   <>
-                    <div className="w-10 h-10 bg-white text-slate-950 rounded flex items-center justify-center font-black text-xl group-hover:rotate-12 transition-transform">
+                    <div className="w-10 h-10 bg-[#0F121E] text-slate-950 rounded flex items-center justify-center font-black text-xl group-hover:rotate-12 transition-transform">
                       {data.logo ? data.logo.charAt(0).toUpperCase() : 'P'}
                     </div>
                     <span className="font-black text-2xl tracking-tighter">{data.logo || 'Portfolify'}</span>
@@ -312,7 +312,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                 {Object.entries(data.socialLinks || {}).map(([key, value]) => (
                   value && (
                     <a key={key} href={value as string} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:-translate-y-1 hover:border-slate-600 transition-all group">
-                      <DynamicIcon name={`fa${key.charAt(0).toUpperCase()}${key.slice(1)}`} className="text-slate-500 group-hover:text-white transition-colors text-sm" />
+                      <DynamicIcon name={`fa${key.charAt(0).toUpperCase()}${key.slice(1)}`} className="text-slate-400 group-hover:text-white transition-colors text-sm" />
                     </a>
                   )
                 ))}
@@ -354,7 +354,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <p>
               {data.footer?.copyRight || `© ${new Date().getFullYear()} ${data.name || 'Portfolify Inc'}. All rights reserved.`}
             </p>

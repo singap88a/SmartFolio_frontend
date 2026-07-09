@@ -19,18 +19,18 @@ const PortfolioCard = ({ id, name, username, subdomain, updatedAt, templateId, o
   const displayUrl = fullUrl.replace(/^https?:\/\//, '');
   
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-[#0F121E] border border-[#1E2336] rounded-xl p-6 shadow-sm hover:shadow-[0_0_20px_rgba(90,75,255,0.15)] hover:border-[#5A4BFF] transition-all">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="text-lg font-bold dark:text-white mb-1">{name}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{displayUrl}</p>
+          <h3 className="text-lg font-bold mb-1">{name}</h3>
+          <p className="text-sm text-slate-400">{displayUrl}</p>
         </div>
         <div className="px-2 py-1 bg-green-50 text-green-600 text-xs font-semibold rounded border border-green-100 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400">
           Published
         </div>
       </div>
       
-      <div className="text-xs text-slate-400 dark:text-slate-500 mb-6">
+      <div className="text-xs text-slate-400 mb-6">
         Last updated {updatedAt}
       </div>
 
@@ -57,3 +57,4 @@ const PortfolioCard = ({ id, name, username, subdomain, updatedAt, templateId, o
 };
 
 export default PortfolioCard;
+

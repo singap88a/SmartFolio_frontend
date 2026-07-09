@@ -20,9 +20,9 @@ const Button = ({
   
   const variants = {
     primary: 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 hover:shadow-indigo-600/40 focus:ring-4 focus:ring-indigo-500/20 ring-offset-2',
-    secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700',
-    outline: 'border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-slate-900',
-    ghost: 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
+    secondary: 'bg-[#151926] text-white hover:bg-[#1E2336] border border-[#1E2336]',
+    outline: 'border-2 border-slate-900 text-white hover:bg-slate-900 hover:text-white dark:border-white dark:hover:bg-[#0F121E] ',
+    ghost: 'text-slate-300 hover:bg-[#151926] hover:text-white dark:hover:text-white',
     danger: 'bg-red-600 text-white shadow-lg shadow-red-500/30 hover:bg-red-700 hover:shadow-red-600/40',
   };
 
@@ -54,3 +54,4 @@ const Button = ({
 };
 
 export default Button;
+

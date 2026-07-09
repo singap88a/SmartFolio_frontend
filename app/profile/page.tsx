@@ -122,8 +122,8 @@ const ProfilePage = () => {
       
       {/* Header */}
       <div>
-        <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2 tracking-widest uppercase">Settings</p>
-        <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">My Profile</h1>
+        <p className="text-sm font-bold text-[#5A4BFF] mb-2 tracking-widest uppercase">Settings</p>
+        <h1 className="text-3xl font-black text-white tracking-tight">My Profile</h1>
       </div>
 
       {/* Alerts */}
@@ -154,16 +154,16 @@ const ProfilePage = () => {
       )}
 
       {/* Main Profile Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-[#0F121E] rounded-3xl border border-[#1E2336] shadow-sm overflow-hidden">
         
         {/* Profile Header (Avatar & Name) */}
-        <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+        <div className="p-8 border-b border-[#1E2336] flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6">
             <div className="relative group">
               <img 
                 src={formData.profileImage || defaultAvatar} 
                 alt="Avatar" 
-                className="w-24 h-24 rounded-2xl object-cover shadow-md border border-slate-100 dark:border-slate-800"
+                className="w-24 h-24 rounded-2xl object-cover shadow-md border border-[#1E2336]"
               />
               {isEditing && (
                 <label className="absolute inset-0 flex items-center justify-center bg-slate-900/50 rounded-2xl opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
@@ -173,8 +173,8 @@ const ProfilePage = () => {
               )}
             </div>
             <div className="text-center sm:text-left">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{formData.username || 'User'}</h2>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 max-w-md">{formData.bio || 'Add a bio to tell visitors who you are.'}</p>
+              <h2 className="text-2xl font-bold text-white">{formData.username || 'User'}</h2>
+              <p className="text-slate-400 text-sm mt-1 max-w-md">{formData.bio || 'Add a bio to tell visitors who you are.'}</p>
             </div>
           </div>
           
@@ -199,7 +199,7 @@ const ProfilePage = () => {
             {/* Left Column */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Display Name</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Display Name</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <UserIcon className="h-5 w-5 text-slate-400" />
@@ -209,13 +209,13 @@ const ProfilePage = () => {
                     type="text"
                     value={formData.username}
                     onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all disabled:opacity-60"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#0B0F19] text-white border border-[#1E2336] rounded-xl focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] transition-all disabled:opacity-60"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Portfolio Subdomain</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Portfolio Subdomain</label>
                 <div className="relative flex">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Globe className="h-5 w-5 text-slate-400" />
@@ -226,9 +226,9 @@ const ProfilePage = () => {
                     value={formData.subdomain}
                     onChange={(e) => handleSubdomainChange(e.target.value)}
                     placeholder="myname"
-                    className={`w-full pl-10 pr-[140px] py-2.5 bg-slate-50 dark:bg-slate-900/50 border rounded-xl transition-all disabled:opacity-60 ${subdomainError ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500'}`}
+                    className={`w-full pl-10 pr-[140px] py-2.5 bg-[#0B0F19] text-white border rounded-xl transition-all disabled:opacity-60 ${subdomainError ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-[#1E2336] focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF]'}`}
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center px-3 border-l border-slate-200 dark:border-slate-800 text-slate-500 bg-slate-100 dark:bg-slate-800 rounded-r-xl text-sm font-medium">
+                  <div className="absolute inset-y-0 right-0 flex items-center px-3 border-l border-[#1E2336] text-slate-400 bg-[#151926] rounded-r-xl text-sm font-medium">
                     .{APP_DOMAIN}
                   </div>
                 </div>
@@ -250,7 +250,7 @@ const ProfilePage = () => {
             {/* Right Column */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Email Address</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Mail className="h-5 w-5 text-slate-400" />
@@ -260,13 +260,13 @@ const ProfilePage = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all disabled:opacity-60"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#0B0F19] text-white border border-[#1E2336] rounded-xl focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] transition-all disabled:opacity-60"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Phone Number</label>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">Phone Number</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Phone className="h-5 w-5 text-slate-400" />
@@ -276,7 +276,7 @@ const ProfilePage = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all disabled:opacity-60"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#0B0F19] text-white border border-[#1E2336] rounded-xl focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] transition-all disabled:opacity-60"
                   />
                 </div>
               </div>
@@ -284,13 +284,13 @@ const ProfilePage = () => {
 
             {/* Full Width Bio */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Short Bio</label>
+              <label className="block text-sm font-semibold text-slate-300 mb-2">Short Bio</label>
               <textarea 
                 disabled={!isEditing}
                 value={formData.bio}
                 onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
                 placeholder="Write a brief intro about yourself..."
-                className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none h-[120px] disabled:opacity-60"
+                className="w-full bg-[#0B0F19] text-white border border-[#1E2336] rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] transition-all resize-none h-[120px] disabled:opacity-60"
               />
             </div>
             

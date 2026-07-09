@@ -129,20 +129,20 @@ const CreatePortfolioPage = () => {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19]">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-[#0B0F19]">
       {/* Header */}
-      <div className="sticky top-16 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-4">
+      <div className="sticky top-16 z-40 bg-[#0F121E] border-b border-[#1E2336] px-4 py-4">
         <div className="w-full px-4 md:px-6 mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-bold dark:text-white">Creating your portfolio</h1>
-            <p className="text-sm text-slate-500">Template: {templateId.charAt(0).toUpperCase() + templateId.slice(1)}</p>
+            <h1 className="text-xl font-bold ">Creating your portfolio</h1>
+            <p className="text-sm text-slate-400">Template: {templateId.charAt(0).toUpperCase() + templateId.slice(1)}</p>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => router.back()}>Cancel</Button>
@@ -154,7 +154,7 @@ const CreatePortfolioPage = () => {
       <div className="w-full px-4 md:px-6 py-6">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Form Side */}
-          <div className="w-full lg:w-[650px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 lg:sticky lg:top-[120px] h-[calc(100vh-140px)] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+          <div className="w-full lg:w-[650px] shrink-0 bg-[#0F121E] rounded-2xl p-5 shadow-sm border border-[#1E2336] lg:sticky lg:top-[120px] h-[calc(100vh-140px)] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
             <PortfolioForm data={data} onChange={setData} />
           </div>
 
@@ -169,3 +169,4 @@ const CreatePortfolioPage = () => {
 };
 
 export default CreatePortfolioPage;
+

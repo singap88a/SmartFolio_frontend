@@ -127,35 +127,35 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4" dir="rtl">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#0F121E] rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center justify-between p-6 border-b border-[#1E2336]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center">
               <Wand2 className="text-indigo-600 dark:text-indigo-400" size={20} />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-800 dark:text-white">املأ بالذكاء الاصطناعي</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">اختر كيف تريد إنشاء أو تعديل محفظتك.</p>
+              <h2 className="text-xl font-bold text-white">املأ بالذكاء الاصطناعي</h2>
+              <p className="text-sm text-slate-400">اختر كيف تريد إنشاء أو تعديل محفظتك.</p>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-400 hover:bg-[#1E2336] rounded-full transition-colors"
           >
             <X size={20} />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-slate-100 dark:border-slate-800 px-6 pt-4 gap-6">
+        <div className="flex border-b border-[#1E2336] px-6 pt-4 gap-6">
           <button
             onClick={() => setActiveTab('wizard')}
             className={`pb-3 text-sm font-medium transition-colors flex items-center gap-2 border-b-2 ${
               activeTab === 'wizard' 
                 ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' 
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                : 'border-transparent text-slate-400 hover:text-slate-300 '
             }`}
           >
             <Sparkles size={16} /> الأسئلة السريعة
@@ -165,7 +165,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
             className={`pb-3 text-sm font-medium transition-colors flex items-center gap-2 border-b-2 ${
               activeTab === 'text' 
                 ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' 
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                : 'border-transparent text-slate-400 hover:text-slate-300 '
             }`}
           >
             <Type size={16} /> لصق نص
@@ -175,7 +175,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
             className={`pb-3 text-sm font-medium transition-colors flex items-center gap-2 border-b-2 ${
               activeTab === 'cv' 
                 ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' 
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                : 'border-transparent text-slate-400 hover:text-slate-300 '
             }`}
           >
             <FileText size={16} /> رفع السيرة الذاتية
@@ -185,7 +185,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
             className={`pb-3 text-sm font-medium transition-colors flex items-center gap-2 border-b-2 ${
               activeTab === 'edit' 
                 ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' 
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                : 'border-transparent text-slate-400 hover:text-slate-300 '
             }`}
           >
             <Pencil size={16} /> التعديل السحري
@@ -197,36 +197,36 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
           {activeTab === 'wizard' && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ما هو اسمك؟</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">ما هو اسمك؟</label>
                 <input 
                   type="text"
                   placeholder="مثال: أحمد محمد"
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                  className="w-full p-3 rounded-xl border border-[#1E2336] bg-[#0B0F19] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
                   value={wizName}
                   onChange={(e) => setWizName(e.target.value)}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ما هو مسماك الوظيفي؟</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">ما هو مسماك الوظيفي؟</label>
                 <input 
                   type="text"
                   placeholder="مثال: مطور ويب (Frontend Developer)"
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                  className="w-full p-3 rounded-xl border border-[#1E2336] bg-[#0B0F19] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
                   value={wizJob}
                   onChange={(e) => setWizJob(e.target.value)}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">اذكر 3 مهارات أو أكثر</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">اذكر 3 مهارات أو أكثر</label>
                 <input 
                   type="text"
                   placeholder="مثال: React, Node.js, تصميم واجهات"
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                  className="w-full p-3 rounded-xl border border-[#1E2336] bg-[#0B0F19] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
                   value={wizSkills}
                   onChange={(e) => setWizSkills(e.target.value)}
                 />
               </div>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-slate-400 mt-2">
                 سنستخدم هذه التفاصيل لكتابة نبذة احترافية كاملة، وإنشاء خدمات، وتخيل مشاريع نموذجية تناسبك!
               </p>
             </div>
@@ -234,11 +234,11 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
 
           {activeTab === 'text' && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 قم بلصق سيرتك الذاتية التفصيلية أو أي نص هنا
               </label>
               <textarea
-                className="w-full h-48 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none outline-none"
+                className="w-full h-48 p-4 rounded-xl border border-[#1E2336] bg-[#0B0F19] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none outline-none"
                 placeholder="مثال: أنا مهندس برمجيات بخبرة 5 سنوات في React و Node.js. مهاراتي تشمل TypeScript و MongoDB. عملت على مشاريع مثل..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -248,16 +248,16 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
 
           {activeTab === 'edit' && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 ما الذي تود تغييره؟
               </label>
               <textarea
-                className="w-full h-48 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none outline-none"
+                className="w-full h-48 p-4 rounded-xl border border-[#1E2336] bg-[#0B0F19] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none outline-none"
                 placeholder="مثال: قم بتغيير مسماي الوظيفي إلى مطور خلفي (Backend) وأضف لغة بايثون إلى مهاراتي."
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-slate-400 mt-2">
                 سيقوم الذكاء الاصطناعي بتعديل البيانات المطلوبة فقط دون المساس بباقي معلومات محفظتك.
               </p>
             </div>
@@ -265,13 +265,13 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
 
           {activeTab === 'cv' && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 ارفع سيرتك الذاتية (بصيغة PDF)
               </label>
-              <div className="mt-2 flex justify-center rounded-xl border border-dashed border-slate-300 dark:border-slate-700 px-6 py-10 bg-slate-50 dark:bg-slate-800/50">
+              <div className="mt-2 flex justify-center rounded-xl border border-dashed border-[#1E2336] px-6 py-10 bg-[#0B0F19]">
                 <div className="text-center">
                   <UploadCloud className="mx-auto h-12 w-12 text-slate-300" aria-hidden="true" />
-                  <div className="mt-4 flex text-sm leading-6 text-slate-600 dark:text-slate-400">
+                  <div className="mt-4 flex text-sm leading-6 text-slate-400">
                     <label
                       htmlFor="file-upload"
                       className="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500 dark:text-indigo-400"
@@ -281,7 +281,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
                     </label>
                     <p className="pl-1">أو قم بالسحب والإفلات هنا</p>
                   </div>
-                  <p className="text-xs leading-5 text-slate-500 mt-2">ملف PDF بحجم أقصاه 10 ميجابايت</p>
+                  <p className="text-xs leading-5 text-slate-400 mt-2">ملف PDF بحجم أقصاه 10 ميجابايت</p>
                   {cvFile && (
                     <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mt-4 bg-indigo-50 dark:bg-indigo-900/30 py-2 px-4 rounded-lg inline-block">
                       تم اختيار: {cvFile.name}
@@ -296,7 +296,7 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3 bg-slate-50 dark:bg-slate-900/50">
+        <div className="p-6 border-t border-[#1E2336] flex justify-end gap-3 bg-[#0B0F19]">
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
             إلغاء
           </Button>
@@ -317,3 +317,4 @@ const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ isOpen, onClose, onDa
 };
 
 export default AIGenerateModal;
+

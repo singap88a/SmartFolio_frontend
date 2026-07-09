@@ -30,7 +30,7 @@ export default function DashboardSidebar() {
       <div className="lg:hidden fixed top-[80px] right-4 z-40">
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="p-3 bg-white dark:bg-slate-900 shadow-xl rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-indigo-600 transition-colors"
+          className="p-3 bg-[#0F121E] shadow-xl rounded-full border border-[#1E2336] text-slate-400 hover:text-indigo-600 transition-colors"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -46,14 +46,14 @@ export default function DashboardSidebar() {
 
       {/* Sidebar Content */}
       <aside className={`
-        fixed lg:sticky top-[80px] left-0 z-40 h-[calc(100vh-80px)] w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col transition-transform duration-300 ease-in-out
+        fixed lg:sticky top-[80px] left-0 z-40 h-[calc(100vh-80px)] w-64 bg-[#0F121E] border-r border-[#1E2336] flex flex-col transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         
         {/* User Profile Area (Moved to top) */}
-        <div className="p-4 border-b border-slate-100 dark:border-slate-800/50">
+        <div className="p-4 border-b border-[#1E2336]/50">
           <div className="flex items-center gap-3 px-2 py-2">
-            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#151926] border border-[#1E2336] overflow-hidden shrink-0">
               <img 
                 src={user?.profileImage || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'} 
                 alt="Profile" 
@@ -61,8 +61,8 @@ export default function DashboardSidebar() {
               />
             </div>
             <div className="flex flex-col truncate">
-              <span className="text-sm font-bold text-slate-900 dark:text-white truncate">{user?.username || 'User'}</span>
-              <span className="text-xs font-semibold text-slate-500 truncate">{user?.email || 'user@example.com'}</span>
+              <span className="text-sm font-bold text-white truncate">{user?.username || 'User'}</span>
+              <span className="text-xs font-semibold text-slate-400 truncate">{user?.email || 'user@example.com'}</span>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function DashboardSidebar() {
                   flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200
                   ${isActive 
                     ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400' 
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white'}
+                    : 'text-slate-400 hover:bg-[#0B0F19] hover:text-white dark:hover:text-white'}
                 `}
               >
                 <Icon size={18} className={isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'} />
@@ -97,7 +97,7 @@ export default function DashboardSidebar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-all duration-200"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-400 hover:bg-[#0B0F19] hover:text-white dark:hover:text-white transition-all duration-200"
             >
               <Globe size={18} className="text-slate-400" />
               View Portfolio
@@ -106,7 +106,7 @@ export default function DashboardSidebar() {
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800/50">
+        <div className="p-4 border-t border-[#1E2336]/50">
           <button
             onClick={handleLogout}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-500/10 dark:hover:bg-red-500/20 transition-all duration-200"
@@ -119,3 +119,4 @@ export default function DashboardSidebar() {
     </>
   );
 }
+

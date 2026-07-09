@@ -86,13 +86,13 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
       ></div>
 
       {/* Main Modal Container */}
-      <div className="relative w-full max-w-5xl h-[85vh] bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-5xl h-[85vh] bg-[#0F121E] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[#1E2336] animate-in fade-in zoom-in-95 duration-200">
         
         {/* Sidebar (Categories) */}
-        <div className="w-full md:w-64 bg-slate-50 dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0 h-48 md:h-full overflow-y-auto custom-scrollbar">
-          <div className="p-5 border-b border-slate-200 dark:border-slate-800 shrink-0">
-            <h2 className="text-xl font-black text-slate-800 dark:text-white">مكتبة الأيقونات</h2>
-            <p className="text-xs text-slate-500 mt-1">اختر الأيقونة المناسبة</p>
+        <div className="w-full md:w-64 bg-[#0B0F19] border-l border-[#1E2336] flex flex-col shrink-0 h-48 md:h-full overflow-y-auto custom-scrollbar">
+          <div className="p-5 border-b border-[#1E2336] shrink-0">
+            <h2 className="text-xl font-black text-white">مكتبة الأيقونات</h2>
+            <p className="text-xs text-slate-400 mt-1">اختر الأيقونة المناسبة</p>
           </div>
           <div className="p-3 flex-1 overflow-y-auto space-y-1">
             {CATEGORIES.map(cat => (
@@ -102,7 +102,7 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
                 className={`w-full text-right px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                   activeCategory === cat.id && !search
                     ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
+                    : 'text-slate-400 hover:bg-[#1E2336] '
                 }`}
               >
                 {cat.label}
@@ -112,9 +112,9 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-slate-900">
+        <div className="flex-1 flex flex-col min-h-0 bg-[#0F121E]">
           {/* Header (Search Bar & Close Button) */}
-          <div className="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center gap-4 shrink-0">
+          <div className="p-4 sm:p-6 border-b border-[#1E2336] flex items-center gap-4 shrink-0">
             <div className="flex-1 relative">
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
@@ -122,13 +122,13 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
                 placeholder="ابحث عن أيقونة بالإنجليزي... (مثل: home, user, car)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-medium outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all text-right"
+                className="w-full pl-4 pr-12 py-3.5 bg-[#0B0F19] border border-[#1E2336] rounded-2xl text-sm font-medium outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all text-right"
                 dir="ltr"
               />
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-3 bg-slate-100 dark:bg-slate-800 hover:bg-rose-100 hover:text-rose-600 text-slate-500 rounded-2xl transition-all"
+              className="p-3 bg-[#151926] hover:bg-rose-100 hover:text-rose-600 text-slate-400 rounded-2xl transition-all"
             >
               <X className="w-5 h-5" />
             </button>
@@ -149,7 +149,7 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
                   className={`flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border transition-all ${
                     value === item.name 
                       ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 shadow-md scale-105' 
-                      : 'border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-indigo-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:-translate-y-1'
+                      : 'border-[#1E2336] bg-[#0F121E] text-slate-400 hover:border-indigo-300 hover:bg-[#1E2336] hover:-translate-y-1'
                   }`}
                   title={item.name}
                 >
@@ -174,12 +174,12 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
 
   return (
     <div className="relative w-full space-y-1.5" dir="rtl">
-      {label && <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{label}</label>}
+      {label && <label className="text-sm font-bold text-slate-300">{label}</label>}
       
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+        className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg border border-[#1E2336] bg-[#0F121E] hover:bg-[#1E2336] transition-all text-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
       >
         <div className="flex items-center gap-3">
           {currentIconDef ? (
@@ -187,7 +187,7 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
           ) : (
             <FontAwesomeIcon icon={SolidIcons.faIcons} className="text-slate-400 text-lg" />
           )}
-          <span className="text-slate-700 dark:text-slate-300 font-medium text-left" dir="ltr">{value || 'اختر أيقونة...'}</span>
+          <span className="text-slate-300 font-medium text-left" dir="ltr">{value || 'اختر أيقونة...'}</span>
         </div>
       </button>
 
@@ -196,3 +196,4 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
     </div>
   );
 }
+

@@ -33,7 +33,7 @@ const TemplatesPage = () => {
 
   if (isLoading || !user || !user.subdomain) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19]">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     );
@@ -42,8 +42,8 @@ const TemplatesPage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-extrabold dark:text-white mb-4">Choose your template</h1>
-        <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-extrabold mb-4">Choose your template</h1>
+        <p className="text-lg text-slate-400 max-w-2xl mx-auto">
           Start with a professionally designed template and customize it to make it your own.
         </p>
       </div>
@@ -62,3 +62,4 @@ const TemplatesPage = () => {
 };
 
 export default TemplatesPage;
+

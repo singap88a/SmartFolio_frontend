@@ -22,24 +22,24 @@ interface AccordionItemProps {
 
 const AccordionItem = ({ id, title, icon, isOpen, onToggle, children }: AccordionItemProps) => {
   return (
-    <div className="border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 overflow-hidden shadow-sm transition-all duration-300">
+    <div className="border border-[#1E2336] rounded-xl bg-[#0F121E] overflow-hidden shadow-sm transition-all duration-300">
       <button 
         onClick={() => onToggle(id)}
-        className={`w-full flex justify-between items-center p-3 transition-colors ${isOpen ? 'bg-slate-50 dark:bg-slate-900/80' : 'bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}
+        className={`w-full flex justify-between items-center p-3 transition-colors ${isOpen ? 'bg-[#0B0F19]/80' : 'bg-[#0F121E] hover:bg-[#1E2336]'}`}
       >
         <div className="flex items-center gap-3">
-          <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${isOpen ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
+          <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${isOpen ? 'bg-indigo-600 text-white shadow-sm' : 'bg-[#151926] text-slate-400'}`}>
             {icon}
           </span>
-          <h3 className="text-sm font-bold text-slate-800 dark:text-white">{title}</h3>
+          <h3 className="text-sm font-bold text-white">{title}</h3>
         </div>
-        <div className={`p-1.5 rounded-full transition-transform duration-300 ${isOpen ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 rotate-180' : 'bg-slate-50 dark:bg-slate-800 text-slate-400'}`}>
+        <div className={`p-1.5 rounded-full transition-transform duration-300 ${isOpen ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 rotate-180' : 'bg-[#151926] text-slate-400'}`}>
           <ChevronDown size={18} />
         </div>
       </button>
       <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
         <div className="overflow-hidden">
-          <div className="p-5 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="p-5 pt-2 border-t border-[#1E2336]">
             {children}
           </div>
         </div>
@@ -115,8 +115,8 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
     <div className="space-y-3" dir="rtl">
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold dark:text-white mb-1">إعدادات المحفظة</h2>
-          <p className="text-slate-500 text-sm">أدخل بياناتك هنا وسوف تظهر مباشرة في شاشة العرض.</p>
+          <h2 className="text-xl font-bold mb-1">إعدادات المحفظة</h2>
+          <p className="text-slate-400 text-sm">أدخل بياناتك هنا وسوف تظهر مباشرة في شاشة العرض.</p>
         </div>
         <Button 
           variant="primary"
@@ -138,14 +138,14 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
       {/* 1. Navbar Customization */}
       <AccordionItem id={1} icon={<LayoutTemplate size={16} />} isOpen={openSection === 1} onToggle={toggleSection} title="إعدادات القائمة العلوية (Navbar)">
         <div className="space-y-6">
-          <div className="p-5 bg-slate-50 dark:bg-slate-950/50 rounded-2xl border border-slate-200 dark:border-slate-800">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block mb-4">شعار الموقع (اللوجو)</label>
+          <div className="p-5 bg-[#0B0F19]/50 rounded-2xl border border-[#1E2336]">
+            <label className="text-sm font-bold text-slate-300 block mb-4">شعار الموقع (اللوجو)</label>
             <div className="flex gap-4 mb-5">
               {['text', 'image'].map(type => (
                 <button 
                   key={type}
                   onClick={() => handleChange('logoType', type)}
-                  className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${data.logoType === type ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                  className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${data.logoType === type ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'bg-[#0F121E] text-slate-400 border border-[#1E2336] hover:bg-[#1E2336]'}`}
                 >
                   {type === 'text' ? 'نص' : 'صورة'}
                 </button>
@@ -153,10 +153,10 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             </div>
             {data.logoType === 'image' ? (
               <div className="flex gap-5 items-center">
-                {data.logo && <img src={data.logo} className="w-14 h-14 rounded-xl object-contain bg-white p-2 border shadow-sm" />}
+                {data.logo && <img src={data.logo} className="w-14 h-14 rounded-xl object-contain bg-[#0F121E] p-2 border shadow-sm" />}
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-slate-500 mb-2">رفع صورة الشعار</label>
-                  <input type="file" accept="image/*" onChange={(e) => handleImageUpload('logo', e)} className="w-full text-sm text-slate-500 file:ml-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
+                  <label className="block text-sm font-medium text-slate-400 mb-2">رفع صورة الشعار</label>
+                  <input type="file" accept="image/*" onChange={(e) => handleImageUpload('logo', e)} className="w-full text-sm text-slate-400 file:ml-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
                 </div>
               </div>
             ) : (
@@ -170,9 +170,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           </div>
 
           <div className="space-y-4">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">روابط القائمة</label>
+            <label className="text-sm font-bold text-slate-300 block">روابط القائمة</label>
             {(data.navbarLinks || []).map((link: any, index: number) => (
-              <div key={index} className="flex gap-3 items-end p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+              <div key={index} className="flex gap-3 items-end p-4 bg-[#0B0F19] rounded-2xl border border-[#1E2336]">
                 <div className="flex-1">
                   <Input label="الاسم" value={link.label || ''} onChange={(e) => {
                     const newLinks = [...data.navbarLinks];
@@ -191,7 +191,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   const newLinks = [...data.navbarLinks];
                   newLinks.splice(index, 1);
                   handleChange('navbarLinks', newLinks);
-                }} className="mb-2 p-3 bg-white dark:bg-slate-900 text-red-500 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shadow-sm border border-slate-200 dark:border-slate-700">
+                }} className="mb-2 p-3 bg-[#0F121E] text-red-500 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shadow-sm border border-[#1E2336]">
                   <X size={18} />
                 </button>
               </div>
@@ -202,7 +202,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#0B0F19]/50 rounded-xl border border-[#1E2336]">
             <Input 
               label="نص زر التواصل السريع (CTA)" 
               value={data.navbarCtaText || ''} 
@@ -210,9 +210,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
               placeholder="مثال: Hire Me"
             />
             <div className="w-full space-y-1.5">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block">رابط زر التواصل (إلى أين يذهب؟)</label>
+              <label className="text-sm font-medium text-slate-300 block">رابط زر التواصل (إلى أين يذهب؟)</label>
               <select 
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 text-sm"
+                className="w-full px-4 py-2.5 rounded-lg border border-[#1E2336] bg-[#0F121E] transition-all outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 text-sm"
                 value={data.navbarCtaLink || '#contact'}
                 onChange={(e) => handleChange('navbarCtaLink', e.target.value)}
               >
@@ -246,12 +246,12 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300">الصورة الشخصية للقسم الرئيسي (Hero Image)</label>
-              <div className="flex gap-4 items-center p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
-                <div className="w-16 h-16 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden border border-slate-200 dark:border-slate-700 flex-shrink-0">
+              <label className="block text-sm font-bold text-slate-300">الصورة الشخصية للقسم الرئيسي (Hero Image)</label>
+              <div className="flex gap-4 items-center p-4 bg-[#0F121E] border border-[#1E2336] rounded-2xl">
+                <div className="w-16 h-16 rounded-xl bg-[#151926] overflow-hidden border border-[#1E2336] flex-shrink-0">
                   {data.heroImage ? <img src={data.heroImage} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-slate-400">?</div>}
                 </div>
-                <input type="file" accept="image/*" onChange={(e) => handleImageUpload('heroImage', e)} className="w-full text-sm text-slate-500 file:ml-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
+                <input type="file" accept="image/*" onChange={(e) => handleImageUpload('heroImage', e)} className="w-full text-sm text-slate-400 file:ml-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
               </div>
             </div>
             <div className="space-y-4">
@@ -264,9 +264,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
             </div>
           </div>
           <div className="w-full space-y-2">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">نبذة عنك (Bio)</label>
+            <label className="text-sm font-bold text-slate-300 block">نبذة عنك (Bio)</label>
             <textarea 
-              className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all min-h-[140px] resize-none text-sm"
+              className="w-full px-5 py-4 rounded-2xl border-2 border-[#1E2336] bg-[#0F121E] focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all min-h-[140px] resize-none text-sm"
               value={data.bio || ''}
               onChange={(e) => handleChange('bio', e.target.value)}
               placeholder="اكتب نبذة مختصرة عنك وعن خبراتك..."
@@ -279,9 +279,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
       <AccordionItem id={3} icon={<Code2 size={16} />} isOpen={openSection === 3} onToggle={toggleSection} title="المهارات (Skills)">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {(data.skills || []).map((skill: any, index: number) => (
-            <div key={index} className="flex flex-col gap-3 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+            <div key={index} className="flex flex-col gap-3 p-4 bg-[#0B0F19] rounded-2xl border border-[#1E2336]">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-slate-500">مهارة {index + 1}</label>
+                <label className="text-xs font-bold text-slate-400">مهارة {index + 1}</label>
                 <button onClick={() => {
                   const newSkills = [...data.skills];
                   newSkills.splice(index, 1);
@@ -312,7 +312,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           ))}
           <button 
             onClick={() => handleChange('skills', [...(data.skills || []), { name: '', icon: '' }])}
-            className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl py-8 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors text-indigo-600 font-bold"
+            className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#1E2336] rounded-2xl py-8 hover:bg-[#1E2336] transition-colors text-indigo-600 font-bold"
           >
             <Plus size={24} />
             إضافة مهارة جديدة
@@ -324,7 +324,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
       <AccordionItem id={4} icon={<Briefcase size={16} />} isOpen={openSection === 4} onToggle={toggleSection} title="الخدمات (Services)">
         <div className="space-y-4">
           {data.services?.map((service: any, index: number) => (
-            <div key={index} className="p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 relative group">
+            <div key={index} className="p-5 bg-[#0B0F19] rounded-2xl border border-[#1E2336] relative group">
               <button 
                 className="absolute top-4 left-4 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                 onClick={() => {
@@ -378,9 +378,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
       <AccordionItem id={5} icon={<FolderGit2 size={16} />} isOpen={openSection === 5} onToggle={toggleSection} title="الأعمال (Projects)">
         <div className="space-y-6">
           {data.projects.map((project: any, index: number) => (
-            <div key={index} className="p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl relative">
+            <div key={index} className="p-6 bg-[#0B0F19] border border-[#1E2336] rounded-3xl relative">
               <button 
-                className="absolute top-5 left-5 p-2 bg-white dark:bg-slate-900 text-red-500 rounded-xl shadow-sm hover:bg-red-50 transition-all border border-slate-200 dark:border-slate-700"
+                className="absolute top-5 left-5 p-2 bg-[#0F121E] text-red-500 rounded-xl shadow-sm hover:bg-red-50 transition-all border border-[#1E2336]"
                 onClick={() => {
                   const newProjects = [...data.projects];
                   newProjects.splice(index, 1);
@@ -420,9 +420,9 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   />
                 </div>
                 <div className="w-full space-y-2">
-                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">وصف المشروع</label>
+                  <label className="text-sm font-bold text-slate-300 block">وصف المشروع</label>
                   <textarea 
-                    className="w-full px-5 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all resize-none text-sm"
+                    className="w-full px-5 py-3 rounded-xl border-2 border-[#1E2336] bg-[#0F121E] focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 outline-none transition-all resize-none text-sm"
                     rows={2}
                     value={project.description || ''}
                     onChange={(e) => {
@@ -433,7 +433,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
                   />
                 </div>
                 <div className="w-full space-y-2">
-                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">التقنيات المستخدمة (مفصولة بفاصلة)</label>
+                  <label className="text-sm font-bold text-slate-300 block">التقنيات المستخدمة (مفصولة بفاصلة)</label>
                   <Input 
                     value={project.skills?.join(', ') || ''} 
                     onChange={(e) => {
@@ -459,7 +459,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           
           {/* Contact Section */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2">قسم التواصل (Contact)</h4>
+            <h4 className="text-sm font-bold text-white border-b border-[#1E2336] pb-2">قسم التواصل (Contact)</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input 
                 label="العنوان (Title)" 
@@ -486,7 +486,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
 
           {/* Newsletter Section */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2">النشرة البريدية (Newsletter)</h4>
+            <h4 className="text-sm font-bold text-white border-b border-[#1E2336] pb-2">النشرة البريدية (Newsletter)</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input 
                 label="عنوان النشرة البريدية" 
@@ -519,7 +519,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
         <div className="space-y-8">
           {/* Social Media Section */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2">روابط السوشيال ميديا</h4>
+            <h4 className="text-sm font-bold text-white border-b border-[#1E2336] pb-2">روابط السوشيال ميديا</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input 
                 label="فيسبوك (Facebook)" 
@@ -556,7 +556,7 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
 
           {/* Footer Text Section */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2">نصوص التذييل (Footer Text)</h4>
+            <h4 className="text-sm font-bold text-white border-b border-[#1E2336] pb-2">نصوص التذييل (Footer Text)</h4>
             <div className="grid grid-cols-1 gap-4">
               <Input 
                 label="نبذة عن الموقع (Footer Description)" 
@@ -574,8 +574,8 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
           </div>
 
           {/* Theme Color */}
-          <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">لون الثيم الأساسي (المظهر)</label>
+          <div className="space-y-4 pt-4 border-t border-[#1E2336]">
+            <label className="text-sm font-bold text-slate-300 block">لون الثيم الأساسي (المظهر)</label>
             <div className="flex flex-wrap gap-4">
               {['#4f46e5', '#ec4899', '#10b981', '#f59e0b', '#ef4444', '#000000'].map(color => (
                 <button
@@ -596,3 +596,4 @@ const PortfolioForm = ({ data, onChange }: PortfolioFormProps) => {
 };
 
 export default PortfolioForm;
+

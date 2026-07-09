@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Sidebar from "@/components/layout/Sidebar";
+import DashboardHeader from "@/components/layout/DashboardHeader";
 import { AuthProvider } from "@/context/AuthContext";
 import { APP_DOMAIN, isLocalhost } from "@/lib/config";
 
@@ -48,15 +48,25 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-[#0B0F19] text-slate-100">
         <AuthProvider>
-          {!isSubdomain && <Navbar />}
-          <main className="flex-grow">
-            {children}
-          </main>
-          {!isSubdomain && <Footer />}
+          {!isSubdomain ? (
+            <div className="flex h-screen w-full overflow-hidden">
+              <Sidebar />
+              <div className="flex flex-col flex-1 overflow-hidden w-full">
+                <DashboardHeader />
+                <main className="flex-1 overflow-y-auto bg-[#0B0F19]">
+                  {children}
+                </main>
+              </div>
+            </div>
+          ) : (
+            <main className="flex-grow">
+              {children}
+            </main>
+          )}
         </AuthProvider>
       </body>
     </html>

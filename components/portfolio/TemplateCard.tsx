@@ -17,17 +17,16 @@ const TemplateCard = ({ id, name, description, image, onSelect }: TemplateCardPr
   };
 
   return (
-    <div className="group bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-      <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+    <div className="group bg-[#0F121E] border-2 border-[#1E2336] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#5A4BFF] transition-all duration-500 hover:-translate-y-2">
+      <div className="aspect-[4/3] bg-slate-800 relative overflow-hidden">
         <img 
           src={images[id as keyof typeof images] || image} 
           alt={name} 
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+        <div className="absolute inset-0 bg-[#0F121E]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
           <Button 
-            variant="primary" 
-            className="scale-90 group-hover:scale-100 transition-transform duration-300"
+            className="scale-90 group-hover:scale-100 transition-transform duration-300 bg-[#5A4BFF] text-white hover:bg-[#4B3DE6] border-0"
             onClick={() => onSelect(id)}
           >
             Select Template
@@ -36,13 +35,12 @@ const TemplateCard = ({ id, name, description, image, onSelect }: TemplateCardPr
       </div>
       
       <div className="p-8">
-        <h3 className="text-2xl font-black dark:text-white mb-3 tracking-tight">{name}</h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8 h-12 overflow-hidden">
+        <h3 className="text-2xl font-black text-white mb-3 tracking-tight">{name}</h3>
+        <p className="text-slate-400 text-sm leading-relaxed mb-8 h-12 overflow-hidden">
           {description}
         </p>
         <Button 
-          variant="outline" 
-          className="w-full h-12 font-black uppercase tracking-widest text-xs"
+          className="w-full h-12 font-black uppercase tracking-widest text-xs border border-[#1E2336] bg-transparent text-white hover:bg-[#1E2336]"
           onClick={() => onSelect(id)}
         >
           Use Template

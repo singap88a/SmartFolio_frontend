@@ -42,15 +42,15 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl p-10 shadow-xl border border-slate-200 dark:border-slate-800">
+    <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center p-6 w-full">
+      <div className="max-w-md w-full bg-[#0F121E] rounded-3xl p-10 shadow-2xl border border-[#1E2336]">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-black mb-2 dark:text-white uppercase tracking-tighter">Create Account</h1>
-          <p className="text-slate-500 text-sm">Join Portfolify and start building today.</p>
+          <h1 className="text-3xl font-black mb-2 text-white uppercase tracking-tighter">Create Account</h1>
+          <p className="text-slate-400 text-sm">Join SmartFolio and start building today.</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm font-bold text-center">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl text-sm font-bold text-center">
             {error}
           </div>
         )}
@@ -62,6 +62,7 @@ const RegisterPage = () => {
             onChange={(e) => setUsername(e.target.value)} 
             required 
             placeholder="johndoe"
+            className="bg-[#0B0F19] border-[#1E2336] text-white focus:border-[#5A4BFF] focus:ring-[#5A4BFF]"
           />
           <Input 
             label="Email Address" 
@@ -70,6 +71,7 @@ const RegisterPage = () => {
             onChange={(e) => setEmail(e.target.value)} 
             required 
             placeholder="john@example.com"
+            className="bg-[#0B0F19] border-[#1E2336] text-white focus:border-[#5A4BFF] focus:ring-[#5A4BFF]"
           />
           <Input 
             label="Password" 
@@ -78,6 +80,7 @@ const RegisterPage = () => {
             onChange={(e) => setPassword(e.target.value)} 
             required 
             placeholder="••••••••"
+            className="bg-[#0B0F19] border-[#1E2336] text-white focus:border-[#5A4BFF] focus:ring-[#5A4BFF]"
           />
           <Input 
             label="Confirm Password" 
@@ -86,16 +89,17 @@ const RegisterPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)} 
             required 
             placeholder="••••••••"
+            className="bg-[#0B0F19] border-[#1E2336] text-white focus:border-[#5A4BFF] focus:ring-[#5A4BFF]"
           />
           
-          <Button type="submit" variant="primary" className="w-full h-14 text-lg" isLoading={isLoading}>
+          <Button type="submit" className="w-full h-14 text-lg bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white border-0" isLoading={isLoading}>
             Get Started
           </Button>
         </form>
 
-        <p className="mt-8 text-center text-sm text-slate-500">
+        <p className="mt-8 text-center text-sm text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-indigo-600 font-bold hover:underline">
+          <Link href="/login" className="text-[#5A4BFF] font-bold hover:underline">
             Log in here
           </Link>
         </p>
