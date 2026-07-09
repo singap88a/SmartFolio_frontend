@@ -5,13 +5,14 @@ import Button from '@/components/ui/Button';
 import { fetchApi } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { getSubdomainUrl } from '@/lib/config';
-import { LayoutTemplate, Eye, Edit3, Trash2, Plus, ExternalLink } from 'lucide-react';
+import { LayoutTemplate, Eye, Edit3, Trash2, Plus, ExternalLink, AlertTriangle, X } from 'lucide-react';
 
 export default function MyTemplatesPage() {
   const { user } = useAuth();
   const [portfolios, setPortfolios] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -35,14 +36,19 @@ export default function MyTemplatesPage() {
     else setIsLoading(false);
   }, [user]);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this template portfolio?')) return;
+  const confirmDelete = (id: string, name: string) => {
+    setDeleteTarget({ id, name });
+  };
+
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
     setIsDeleting(true);
     try {
-      await fetchApi(`/portfolio/${id}`, { method: 'DELETE' });
-      setPortfolios(prev => prev.filter(p => p._id !== id));
+      await fetchApi(`/portfolio/${deleteTarget.id}`, { method: 'DELETE' });
+      setPortfolios(prev => prev.filter(p => p._id !== deleteTarget.id));
+      setDeleteTarget(null);
     } catch {
-      alert('Failed to delete portfolio.');
+      setDeleteTarget(null);
     } finally {
       setIsDeleting(false);
     }
@@ -80,6 +86,12 @@ export default function MyTemplatesPage() {
               ? portfolioItem.templateId.charAt(0).toUpperCase() + portfolioItem.templateId.slice(1)
               : 'Custom';
 
+            const TEMPLATE_PREVIEWS: Record<string, string> = {
+              developer: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+              creative: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800',
+            };
+            const previewImage = TEMPLATE_PREVIEWS[portfolioItem.templateId] || TEMPLATE_PREVIEWS.developer;
+
             return (
               <div 
                 key={portfolioItem._id} 
@@ -89,17 +101,20 @@ export default function MyTemplatesPage() {
                 {/* Preview Thumbnail */}
                 <div className="relative aspect-video bg-[#0A0D14] overflow-hidden">
                   {/* Mock Browser Frame */}
-                  <div className="absolute top-0 inset-x-0 h-6 bg-[#0F121E] border-b border-[#1E2336] flex items-center px-3 gap-1.5 z-10">
+                  <div className="absolute top-0 inset-x-0 h-6 bg-[#0F121E]/95 border-b border-[#1E2336] flex items-center px-3 gap-1.5 z-10">
                     <div className="w-2 h-2 rounded-full bg-red-500/70" />
                     <div className="w-2 h-2 rounded-full bg-amber-500/70" />
                     <div className="w-2 h-2 rounded-full bg-emerald-500/70" />
                   </div>
-                  <div className="absolute inset-0 pt-6 flex flex-col items-center justify-center bg-gradient-to-br from-[#0F121E] to-[#151926]">
-                    <div className="w-12 h-12 rounded-2xl bg-[#5A4BFF]/20 border border-[#5A4BFF]/30 flex items-center justify-center mb-3">
-                      <LayoutTemplate className="w-6 h-6 text-[#5A4BFF]" />
-                    </div>
-                    <span className="text-xs font-bold text-slate-400">{templateName} Template</span>
-                  </div>
+                  {/* Actual Template Preview Image */}
+                  <img
+                    src={previewImage}
+                    alt={`${templateName} template preview`}
+                    className="absolute inset-0 w-full h-full object-cover pt-6 group-hover:scale-105 transition-transform duration-500"
+                  />
+                  {/* Subtle dark overlay to keep text readable */}
+                  <div className="absolute inset-0 pt-6 bg-gradient-to-t from-[#0A0D14]/60 via-transparent to-transparent pointer-events-none" />
+
                   {/* Live badge */}
                   <div className="absolute top-8 right-3 flex items-center gap-1.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold px-2 py-1 rounded-full z-10">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -152,7 +167,7 @@ export default function MyTemplatesPage() {
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(portfolioItem._id)}
+                      onClick={() => confirmDelete(portfolioItem._id, portfolioItem.data?.name || portfolioItem.templateId)}
                       disabled={isDeleting}
                       className="w-11 flex items-center justify-center rounded-xl border border-[#1E2336] text-slate-500 hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/5 transition-colors"
                     >
@@ -180,6 +195,56 @@ export default function MyTemplatesPage() {
               Browse Templates
             </Button>
           </Link>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-[#060810]/80 backdrop-blur-md"
+            onClick={() => setDeleteTarget(null)}
+          />
+
+          {/* Modal */}
+          <div className="relative z-10 bg-[#0F121E] border border-[#232943] w-full max-w-md rounded-3xl p-8 shadow-2xl">
+            {/* Close */}
+            <button
+              onClick={() => setDeleteTarget(null)}
+              className="absolute top-5 right-5 text-slate-500 hover:text-white transition-colors"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Icon */}
+            <div className="w-14 h-14 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-center mb-5">
+              <AlertTriangle className="text-red-400" size={26} />
+            </div>
+
+            <h3 className="text-xl font-bold text-white mb-2">Delete Template?</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-8">
+              Are you sure you want to permanently delete the{' '}
+              <span className="font-semibold text-white">{deleteTarget.name}</span>{' '}
+              portfolio? This action cannot be undone.
+            </p>
+
+            <div className="flex gap-3">
+              <Button
+                onClick={() => setDeleteTarget(null)}
+                className="flex-1 py-3 border border-[#232943] bg-transparent text-slate-300 hover:bg-[#1E2336] rounded-xl text-sm font-bold"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleDelete}
+                isLoading={isDeleting}
+                className="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white border-0 rounded-xl text-sm font-bold shadow-[0_0_15px_rgba(239,68,68,0.2)] transition-all"
+              >
+                Yes, Delete
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

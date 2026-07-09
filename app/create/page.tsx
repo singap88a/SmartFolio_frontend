@@ -73,6 +73,7 @@ const CreatePortfolioPage = () => {
   const templateId = searchParams.get('template') || 'developer';
 
   const [data, setData] = useState(DEFAULT_DATA);
+  const [subdomain, setSubdomain] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -80,10 +81,6 @@ const CreatePortfolioPage = () => {
     if (!authLoading) {
       if (!user) {
         router.push('/login');
-        return;
-      }
-      if (!user.subdomain) {
-        router.push('/profile?requireSubdomain=true');
         return;
       }
     }
@@ -94,6 +91,7 @@ const CreatePortfolioPage = () => {
         const portfolio = await fetchApi(`/portfolio/my?templateId=${templateId}`);
         if (portfolio && portfolio.data) {
           setData(portfolio.data);
+          if (portfolio.subdomain) setSubdomain(portfolio.subdomain);
         } else {
           setData({
             ...DEFAULT_DATA,
@@ -121,12 +119,12 @@ const CreatePortfolioPage = () => {
     try {
       await fetchApi('/portfolio', {
         method: 'POST',
-        body: JSON.stringify({ templateId, data }),
+        body: JSON.stringify({ templateId, subdomain, data }),
       });
 
       router.push('/my-templates');
     } catch (err) {
-      alert('Error saving portfolio. Are you logged in?');
+      alert('Error saving portfolio. Please try again.');
     } finally {
       setIsSaving(false);
     }
