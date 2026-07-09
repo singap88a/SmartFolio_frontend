@@ -85,15 +85,6 @@ export default function DashboardHeader() {
                   My Profile
                 </Link>
                 
-                <Link 
-                  href="/profile" 
-                  className="w-full text-left px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#1E2336] flex items-center gap-2 transition-colors"
-                  onClick={() => setDropdownOpen(false)}
-                >
-                  <Settings size={16} />
-                  Settings
-                </Link>
-
                 <div className="h-px bg-[#1E2336] my-1 mx-2"></div>
                 
                 <button 

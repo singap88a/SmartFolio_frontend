@@ -5,10 +5,10 @@ import Button from '@/components/ui/Button';
 import { fetchApi } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { getSubdomainUrl } from '@/lib/config';
-import { LayoutTemplate, Eye, Edit3, Trash2, Plus, ExternalLink, AlertTriangle, X } from 'lucide-react';
+import { LayoutTemplate, Eye, Edit3, Trash2, Plus, ExternalLink, AlertTriangle, X, LogIn, Layers } from 'lucide-react';
 
 export default function MyTemplatesPage() {
-  const { user } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const [portfolios, setPortfolios] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -33,7 +33,7 @@ export default function MyTemplatesPage() {
       }
     };
     if (user) load();
-    else setIsLoading(false);
+    else setIsLoading(false); // guest: no fetch needed
   }, [user]);
 
   const confirmDelete = (id: string, name: string) => {
@@ -72,9 +72,33 @@ export default function MyTemplatesPage() {
       </div>
 
       {/* Content */}
-      {isLoading ? (
+      {isLoading || authLoading ? (
         <div className="flex justify-center items-center h-64 bg-[#0F121E] rounded-3xl border border-[#1E2336]">
           <div className="w-10 h-10 border-2 border-[#5A4BFF] border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : !user ? (
+        /* Guest state: not logged in */
+        <div className="flex flex-col items-center justify-center text-center py-32 bg-[#0F121E] rounded-3xl border border-[#1E2336] relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#5A4BFF]/8 rounded-full blur-[80px] pointer-events-none" />
+          <div className="w-20 h-20 bg-[#0B0F19] rounded-2xl flex items-center justify-center mb-6 border border-[#1E2336] relative z-10 shadow-xl">
+            <LogIn className="w-10 h-10 text-[#5A4BFF]" />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-3 relative z-10">Sign in to see your templates</h2>
+          <p className="text-slate-400 max-w-sm mx-auto mb-8 relative z-10 text-sm leading-relaxed">
+            Your saved portfolio templates will appear here once you log in.
+          </p>
+          <div className="flex gap-3 relative z-10">
+            <Link href="/login">
+              <Button className="rounded-xl px-8 shadow-[0_0_15px_rgba(90,75,255,0.2)] hover:-translate-y-1 transition-transform bg-[#5A4BFF] text-white hover:bg-[#4B3DE6] border-0">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/templates">
+              <Button className="rounded-xl px-6 border border-[#1E2336] bg-transparent text-slate-300 hover:bg-[#1E2336] hover:-translate-y-1 transition-all">
+                <Layers size={16} className="mr-2" /> Browse Templates
+              </Button>
+            </Link>
+          </div>
         </div>
       ) : portfolios.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
