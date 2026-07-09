@@ -1,16 +1,19 @@
 import type { NextConfig } from "next";
 
-// This is safe in modern Next.js as it compiles next.config.ts using SWC/esbuild
-import { BACKEND_URL } from "./lib/config";
+const isDev = process.env.NODE_ENV !== 'production';
 
 const nextConfig: NextConfig = {
   async rewrites() {
+    const backendUrl = isDev 
+      ? 'http://localhost:5000' 
+      : 'https://smart-folio-backend.vercel.app';
+
     return [
       {
         source: '/api/:path*',
-        destination: `https://smart-folio-backend.vercel.app/api/:path*`
+        destination: `${backendUrl}/api/:path*`
       }
-    ]
+    ];
   }
 };
 

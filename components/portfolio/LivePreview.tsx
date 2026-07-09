@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import DeveloperTemplate from '../templates/DeveloperTemplate';
+import { templates } from '../templates';
 import { Monitor, Tablet, Smartphone } from 'lucide-react';
 
 // Custom Frame component to copy tailwind styles and render children inside iframe
@@ -97,12 +97,8 @@ const LivePreview = ({ templateId, data }: LivePreviewProps) => {
   }, [device, deviceWidth, deviceHeight]);
 
   const renderTemplate = () => {
-    switch (templateId) {
-      case 'developer':
-        return <DeveloperTemplate data={data} />;
-      default:
-        return <DeveloperTemplate data={data} />;
-    }
+    const TemplateComponent = templates[templateId as keyof typeof templates] || templates.developer;
+    return <TemplateComponent data={data} />;
   };
 
   return (

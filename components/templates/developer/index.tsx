@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Button from '../ui/Button';
+import Button from '../../ui/Button';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as SolidIcons from '@fortawesome/free-solid-svg-icons';
@@ -111,7 +111,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
             {data.whatsapp && (
               <Button variant="outline" size="lg" onClick={() => window.open(`https://wa.me/${data.whatsapp?.replace(/\D/g, '')}`, '_blank')}>WhatsApp</Button>
             )}
-            <Button variant="outline" size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Let's Talk</Button>
+            <Button variant="outline" size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Let&apos;s Talk</Button>
           </div>
         </motion.div>
         
@@ -170,7 +170,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
             >
               <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-indigo-500/10" style={{ color: accentColor }}>
                 {service.icon ? <DynamicIcon name={service.icon} className="w-6 h-6" /> : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4 4-4"/></svg>
                 )}
               </div>
               <h3 className="text-xl font-bold mb-4">{service.title}</h3>
@@ -233,7 +233,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                   ))}
                 </>
               ) : (
-                <>Let's start <br /> something <span style={{ color: accentColor }}>new.</span></>
+                <>Let&apos;s start <br /> something <span style={{ color: accentColor }}>new.</span></>
               )}
             </h2>
             <p className="text-slate-400 mb-12 text-lg max-w-md">
@@ -366,4 +366,3 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
 };
 
 export default DeveloperTemplate;
-

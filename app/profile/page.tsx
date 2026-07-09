@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { fetchApi } from '@/lib/api';
 import { getSubdomainUrl, APP_DOMAIN } from '@/lib/config';
 import Button from '@/components/ui/Button';
-import { User as UserIcon, Mail, Phone, Calendar, Globe, Camera, Save, AlertCircle, Check, Lock, ArrowRight, LayoutTemplate } from 'lucide-react';
+import { User as UserIcon, Mail, Phone, Globe, Camera, Save, AlertCircle, Check, ArrowRight } from 'lucide-react';
 
 const ProfilePage = () => {
   const { user, checkAuth } = useAuth();
@@ -16,7 +16,6 @@ const ProfilePage = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [subdomainError, setSubdomainError] = useState('');
   const [generalError, setGeneralError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   
@@ -27,10 +26,9 @@ const ProfilePage = () => {
     phone: '',
     birthDate: '',
     profileImage: '',
-    subdomain: '',
   });
   
-  const [userPortfolio, setUserPortfolio] = useState<any>(null);
+  const [userPortfolios, setUserPortfolios] = useState<any[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -41,47 +39,30 @@ const ProfilePage = () => {
         phone: user.phone || '',
         birthDate: user.birthDate ? new Date(user.birthDate).toISOString().split('T')[0] : '',
         profileImage: user.profileImage || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        subdomain: user.subdomain || '',
       });
     }
 
-    const fetchUserPortfolio = async () => {
+    const fetchUserPortfolios = async () => {
       try {
         const res = await fetchApi('/portfolio/my');
-        if (res && res.data) {
-          setUserPortfolio(res.data);
+        if (res && Array.isArray(res)) {
+          setUserPortfolios(res);
+        } else if (res && typeof res === 'object') {
+          setUserPortfolios([res]);
         }
       } catch (err) {
-        console.log('No portfolio found for user');
+        console.log('No portfolios found for user');
       }
     };
 
-    fetchUserPortfolio();
+    fetchUserPortfolios();
   }, [user]);
-
-  const handleSubdomainChange = (val: string) => {
-    const cleanVal = val.toLowerCase().replace(/[^a-z0-9-]/g, '');
-    setFormData(prev => ({ ...prev, subdomain: cleanVal }));
-    setSubdomainError('');
-    setGeneralError('');
-    
-    if (cleanVal.trim() === '') {
-      setSubdomainError('Subdomain cannot be empty.');
-    }
-  };
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setSubdomainError('');
     setGeneralError('');
     setSuccessMessage('');
-
-    if (!formData.subdomain.trim()) {
-      setSubdomainError('Please enter a valid subdomain.');
-      setIsLoading(false);
-      return;
-    }
 
     try {
       await fetchApi('/auth/profile', {
@@ -94,11 +75,7 @@ const ProfilePage = () => {
       setIsEditing(false);
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (err: any) {
-      if (err.message?.includes('subdomain')) {
-        setSubdomainError(err.message);
-      } else {
-        setGeneralError(err.message || 'Failed to update profile');
-      }
+      setGeneralError(err.message || 'Failed to update profile');
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +104,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Alerts */}
-      {requireSubdomain && !user?.subdomain && (
+      {requireSubdomain && userPortfolios.length === 0 && (
         <div className="bg-amber-50 dark:bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-2xl flex items-start gap-4">
           <AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-500 shrink-0" />
           <div>
@@ -215,35 +192,34 @@ const ProfilePage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Portfolio Subdomain</label>
-                <div className="relative flex">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Globe className="h-5 w-5 text-slate-400" />
-                  </div>
-                  <input
-                    disabled={!isEditing}
-                    type="text"
-                    value={formData.subdomain}
-                    onChange={(e) => handleSubdomainChange(e.target.value)}
-                    placeholder="myname"
-                    className={`w-full pl-10 pr-[140px] py-2.5 bg-[#0B0F19] text-white border rounded-xl transition-all disabled:opacity-60 ${subdomainError ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-[#1E2336] focus:ring-2 focus:ring-[#5A4BFF] focus:border-[#5A4BFF]'}`}
-                  />
-                  <div className="absolute inset-y-0 right-0 flex items-center px-3 border-l border-[#1E2336] text-slate-400 bg-[#151926] rounded-r-xl text-sm font-medium">
-                    .{APP_DOMAIN}
-                  </div>
-                </div>
-                {subdomainError && <p className="text-xs text-red-500 mt-2 flex items-center gap-1"><AlertCircle size={12}/>{subdomainError}</p>}
-                
-                {/* Live Link Preview */}
-                {!isEditing && formData.subdomain && (
-                  <a href={getSubdomainUrl(formData.subdomain)} target="_blank" rel="noreferrer" className="mt-3 flex items-center justify-between p-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 group hover:bg-indigo-50 dark:hover:bg-indigo-500/20 transition-colors">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                      <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-400">{getSubdomainUrl(formData.subdomain)}</span>
+                <label className="block text-sm font-semibold text-slate-300 mb-2">My Active Subdomains</label>
+                <div className="space-y-3">
+                  {userPortfolios.length > 0 ? (
+                    userPortfolios.map((port: any) => (
+                      <a 
+                        key={port._id}
+                        href={getSubdomainUrl(port.subdomain)} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex items-center justify-between p-3.5 rounded-2xl bg-[#0B0F19] border border-[#1E2336] group hover:border-[#5A4BFF]/50 transition-colors"
+                      >
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[10px] font-black text-[#5A4BFF] uppercase tracking-widest">
+                            {port.templateId} Template
+                          </span>
+                          <span className="text-xs font-semibold text-slate-300 truncate mt-1">
+                            {port.subdomain}.{APP_DOMAIN}
+                          </span>
+                        </div>
+                        <ArrowRight size={14} className="text-[#5A4BFF] group-hover:translate-x-1 transition-transform shrink-0" />
+                      </a>
+                    ))
+                  ) : (
+                    <div className="text-xs text-slate-500 border border-dashed border-[#1E2336] p-5 rounded-2xl text-center">
+                      No active subdomains yet. Choose a template to register one.
                     </div>
-                    <ArrowRight size={14} className="text-indigo-500 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                )}
+                  )}
+                </div>
               </div>
             </div>
 

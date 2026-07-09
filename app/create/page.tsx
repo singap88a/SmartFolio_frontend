@@ -91,12 +91,21 @@ const CreatePortfolioPage = () => {
     // Check for existing portfolio
     const fetchPortfolio = async () => {
       try {
-        const portfolio = await fetchApi('/portfolio/my');
+        const portfolio = await fetchApi(`/portfolio/my?templateId=${templateId}`);
         if (portfolio && portfolio.data) {
           setData(portfolio.data);
+        } else {
+          setData({
+            ...DEFAULT_DATA,
+            themeColor: templateId === 'creative' ? '#ec4899' : '#4f46e5'
+          });
         }
       } catch (err) {
         console.error('Failed to fetch portfolio:', err);
+        setData({
+          ...DEFAULT_DATA,
+          themeColor: templateId === 'creative' ? '#ec4899' : '#4f46e5'
+        });
       } finally {
         setIsLoading(false);
       }
@@ -104,10 +113,6 @@ const CreatePortfolioPage = () => {
 
     if (user) {
       fetchPortfolio();
-    }
-
-    if (templateId === 'creative') {
-      setData(prev => ({ ...prev, themeColor: '#ec4899' }));
     }
   }, [templateId, user, authLoading, router]);
 
@@ -119,7 +124,7 @@ const CreatePortfolioPage = () => {
         body: JSON.stringify({ templateId, data }),
       });
 
-      router.push('/profile/dashboard');
+      router.push('/my-templates');
     } catch (err) {
       alert('Error saving portfolio. Are you logged in?');
     } finally {

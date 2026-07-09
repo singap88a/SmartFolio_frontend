@@ -7,7 +7,7 @@ const FRONTEND_URL_LOCAL = 'http://localhost:3000';
 const FRONTEND_URL_PROD = 'https://smartfolio-ten.vercel.app';
 
 // 2. رابط الباك إند (السيرفر)
-const BACKEND_URL_LOCAL = 'http://127.0.0.1:5000'; 
+const BACKEND_URL_LOCAL = 'http://localhost:5000'; 
 const BACKEND_URL_PROD = 'https://smart-folio-backend.vercel.app';
 
 // 3. وضع التشغيل (التحكم اليدوي)
