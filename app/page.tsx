@@ -5,14 +5,14 @@ import Button from '@/components/ui/Button';
 import { fetchApi } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { getSubdomainUrl } from '@/lib/config';
-import { 
-  Plus, 
-  LayoutTemplate, 
-  Eye, 
-  Edit3, 
-  Globe, 
-  TrendingUp, 
-  Clock, 
+import {
+  Plus,
+  LayoutTemplate,
+  Eye,
+  Edit3,
+  Globe,
+  TrendingUp,
+  Clock,
   Sparkles,
   ArrowRight
 } from 'lucide-react';
@@ -44,7 +44,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-[#0B0F19] overflow-y-auto custom-scrollbar p-6 lg:p-10">
-      
+
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
         <div>
@@ -56,7 +56,7 @@ export default function DashboardPage() {
             Analyze your site activity and make updates dynamically.
           </p>
         </div>
-        
+
         {portfolio ? (
           <Link href="/create">
             <Button size="lg" className="bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white border-0 shadow-[0_0_20px_rgba(90,75,255,0.3)] hover:-translate-y-0.5 transition-all gap-2 rounded-xl">
@@ -80,10 +80,10 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div className="space-y-8">
-          
+
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+
             <div className="bg-[#0F121E] border border-[#1E2336] p-6 rounded-2xl flex items-center justify-between shadow-sm relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#5A4BFF]/5 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
               <div>
@@ -126,7 +126,7 @@ export default function DashboardPage() {
           {/* Portfolio Management Panel */}
           {portfolio ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              
+
               {/* Active Portfolio Preview Card */}
               <div className="lg:col-span-2 bg-[#0F121E] border border-[#1E2336] rounded-3xl overflow-hidden hover:border-[#5A4BFF]/30 transition-all shadow-sm">
                 <div className="p-6 border-b border-[#1E2336] flex justify-between items-center bg-[#0A0D14]">
@@ -138,7 +138,7 @@ export default function DashboardPage() {
                     Active
                   </span>
                 </div>
-                
+
                 <div className="p-6 flex flex-col justify-between h-[300px] relative bg-gradient-to-br from-[#0F121E] to-[#0A0D14]">
                   <div className="space-y-3">
                     <h3 className="text-2xl font-black text-white">
@@ -208,7 +208,7 @@ export default function DashboardPage() {
             /* Empty State for Dashboard */
             <div className="flex flex-col items-center justify-center text-center py-24 bg-[#0F121E] rounded-3xl border border-[#1E2336] shadow-[0_0_40px_rgba(90,75,255,0.02)] relative overflow-hidden">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#5A4BFF]/5 rounded-full blur-[80px] pointer-events-none" />
-              
+
               <div className="w-20 h-20 bg-[#0B0F19] rounded-2xl flex items-center justify-center mb-6 border border-[#1E2336] relative z-10 shadow-xl">
                 <LayoutTemplate className="w-10 h-10 text-[#5A4BFF]" />
               </div>
