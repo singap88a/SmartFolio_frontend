@@ -6,10 +6,10 @@ import { useAuth } from '@/context/AuthContext';
 import { fetchApi } from '@/lib/api';
 import { getSubdomainUrl } from '@/lib/config';
 import Button from '@/components/ui/Button';
-import {
-  Eye,
-  Users,
-  MessageSquare,
+import { 
+  Eye, 
+  Users, 
+  MessageSquare, 
   Activity,
   ArrowRight,
   TrendingUp,
@@ -93,7 +93,7 @@ export default function DashboardPage() {
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
               <Eye className="w-3.5 h-3.5 text-blue-400" /> Page Views
             </span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5" /> 12.5%</span>
+            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5"/> 12.5%</span>
           </div>
           <div className="flex items-end justify-between z-10">
             <h3 className="text-2xl font-bold text-white">24,592</h3>
@@ -111,7 +111,7 @@ export default function DashboardPage() {
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
               <Users className="w-3.5 h-3.5 text-cyan-400" /> Unique Visitors
             </span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5" /> 5.2%</span>
+            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5"/> 5.2%</span>
           </div>
           <div className="flex items-end justify-between z-10">
             <h3 className="text-2xl font-bold text-white">8,439</h3>
@@ -128,7 +128,7 @@ export default function DashboardPage() {
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
               <MessageSquare className="w-3.5 h-3.5 text-purple-400" /> Form Submissions
             </span>
-            <span className="text-xs font-medium text-rose-400 flex items-center bg-rose-500/10 px-1.5 py-0.5 rounded"><ArrowDownRight className="w-3 h-3 mr-0.5" /> 2.4%</span>
+            <span className="text-xs font-medium text-rose-400 flex items-center bg-rose-500/10 px-1.5 py-0.5 rounded"><ArrowDownRight className="w-3 h-3 mr-0.5"/> 2.4%</span>
           </div>
           <div className="flex items-end justify-between z-10">
             <h3 className="text-2xl font-bold text-white">142</h3>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
 
       {/* Main Grid: Strategic Overview & Intelligence */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-
+        
         {/* Strategic Overview: Hybrid Chart & Funnel */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-2xl p-6 flex-1 flex flex-col">
@@ -170,7 +170,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-400">Aggregated view of visitor journey and volume over 30 days.</p>
               </div>
             </div>
-
+            
             <div className="flex-1 flex flex-col md:flex-row gap-6">
               {/* Left: Area Chart Placeholder */}
               <div className="flex-1 rounded-xl border border-slate-800/50 bg-[#0A0D14]/80 p-4 relative overflow-hidden group min-h-[250px] flex flex-col">
@@ -181,16 +181,16 @@ export default function DashboardPage() {
                     <span className="flex items-center gap-1 text-slate-300"><div className="w-2 h-2 rounded-full bg-cyan-400"></div> Unique</span>
                   </div>
                 </div>
-
+                
                 {/* Mock Chart Visualization */}
                 <div className="flex-1 w-full flex items-end justify-between gap-1 relative z-10 px-2 pb-2">
                   {/* Mock Bars/Area simulation */}
                   {[40, 55, 45, 70, 65, 80, 95, 85, 100, 90, 75, 85, 110, 105, 120].map((h, i) => (
                     <div key={i} className="relative flex-1 flex items-end group/bar cursor-crosshair h-full">
                       {/* Background Area Bar */}
-                      <div style={{ height: `${h}%` }} className="w-full bg-blue-500/10 rounded-t-sm border-t border-blue-500/30 group-hover/bar:bg-blue-500/20 transition-all"></div>
+                      <div style={{height: `${h}%`}} className="w-full bg-blue-500/10 rounded-t-sm border-t border-blue-500/30 group-hover/bar:bg-blue-500/20 transition-all"></div>
                       {/* Stacked Overlay (Unique visitors approx) */}
-                      <div style={{ height: `${h * 0.4}%` }} className="absolute bottom-0 w-full bg-cyan-400/80 rounded-t-sm shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
+                      <div style={{height: `${h * 0.4}%`}} className="absolute bottom-0 w-full bg-cyan-400/80 rounded-t-sm shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
                     </div>
                   ))}
                 </div>
@@ -205,7 +205,7 @@ export default function DashboardPage() {
               {/* Right: Condensed Funnel */}
               <div className="w-full md:w-48 lg:w-56 flex flex-col gap-2 justify-center">
                 <span className="text-xs text-slate-400 font-semibold uppercase mb-2">Conversion Funnel</span>
-
+                
                 {/* Step 1 */}
                 <div className="relative w-full bg-slate-800/30 border border-slate-700/50 rounded-lg p-3 text-center">
                   <div className="text-xs text-slate-400 mb-1">Total Visitors</div>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="h-4 flex justify-center"><div className="w-px bg-slate-700/50"></div></div>
-
+                
                 {/* Step 2 */}
                 <div className="relative w-[90%] mx-auto bg-slate-800/40 border border-slate-700/50 rounded-lg p-3 text-center">
                   <div className="text-xs text-slate-400 mb-1">Engaged (&gt;1m)</div>
@@ -225,7 +225,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="h-4 flex justify-center"><div className="w-px bg-slate-700/50"></div></div>
-
+                
                 {/* Step 3 */}
                 <div className="relative w-[75%] mx-auto bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-3 text-center shadow-[0_0_15px_rgba(99,102,241,0.1)]">
                   <div className="text-xs text-indigo-200 mb-1">Leads Captured</div>
@@ -262,7 +262,7 @@ export default function DashboardPage() {
                   <div>
                     <h4 className="text-sm font-semibold text-slate-200 mb-1 group-hover:text-white transition-colors">{item.title}</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
-
+                    
                     {/* Action Suggestion Link */}
                     {item.type === 'suggestion' && (
                       <button className="mt-2 text-xs font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors">
@@ -286,7 +286,7 @@ export default function DashboardPage() {
       <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-2xl p-6 relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
-
+        
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 relative z-10 gap-4">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center gap-2 mb-1">
@@ -314,7 +314,7 @@ export default function DashboardPage() {
 
         {/* Thumbnail Grid & Summary */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-
+          
           {portfolio ? (
             <>
               {/* Active Portfolio Thumbnail */}
