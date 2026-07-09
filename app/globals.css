@@ -85,18 +85,26 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Custom Scrollbar for Dashboard */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Global Custom Scrollbar for both the app and iframe previews */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+::-webkit-scrollbar-track {
+  background: #0B0F19;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #1E2336;
-  border-radius: 10px;
+  border-radius: 9999px;
+  border: 2px solid #0B0F19;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #2A314A;
+::-webkit-scrollbar-thumb:hover {
+  background: #5A4BFF;
 }
+
+/* For Firefox compatibility */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1E2336 #0B0F19;
+}
+

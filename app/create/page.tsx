@@ -32,8 +32,8 @@ const DEFAULT_DATA = {
     { title: 'UI/UX Design', description: 'Creating beautiful and intuitive user interfaces.', icon: 'Palette' }
   ],
   projects: [
-    { 
-      title: 'Project One', 
+    {
+      title: 'Project One',
       description: 'A brief description of your amazing project.',
       image: '',
       link: '',
@@ -47,11 +47,11 @@ const DEFAULT_DATA = {
     linkedin: '',
     github: ''
   },
-  contact: { 
-    title: "Let's work together", 
+  contact: {
+    title: "Let's work together",
     description: 'Feel free to reach out for collaborations or just a friendly hello',
-    email: 'hello@example.com', 
-    phone: '+1 234 567 890' 
+    email: 'hello@example.com',
+    phone: '+1 234 567 890'
   },
   newsletter: {
     title: 'Subscribe to Newsletter',
@@ -71,7 +71,7 @@ const CreatePortfolioPage = () => {
   const router = useRouter();
   const { user, isLoading: authLoading } = useAuth();
   const templateId = searchParams.get('template') || 'developer';
-  
+
   const [data, setData] = useState(DEFAULT_DATA);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,7 +105,7 @@ const CreatePortfolioPage = () => {
     if (user) {
       fetchPortfolio();
     }
-    
+
     if (templateId === 'creative') {
       setData(prev => ({ ...prev, themeColor: '#ec4899' }));
     }
@@ -118,7 +118,7 @@ const CreatePortfolioPage = () => {
         method: 'POST',
         body: JSON.stringify({ templateId, data }),
       });
-      
+
       router.push('/profile/dashboard');
     } catch (err) {
       alert('Error saving portfolio. Are you logged in?');
@@ -136,30 +136,30 @@ const CreatePortfolioPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19]">
+    <div className="min-h-screen w-full max-w-full bg-[#0B0F19] overflow-x-hidden">
       {/* Header */}
-      <div className="sticky top-16 z-40 bg-[#0F121E] border-b border-[#1E2336] px-4 py-4">
-        <div className="w-full px-4 md:px-6 mx-auto flex justify-between items-center">
+      <div className="sticky top-0 z-40 bg-[#0F121E] border-b border-[#1E2336] px-6 py-5 shadow-lg">
+        <div className="w-full mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-bold ">Creating your portfolio</h1>
-            <p className="text-sm text-slate-400">Template: {templateId.charAt(0).toUpperCase() + templateId.slice(1)}</p>
+            <h1 className="text-2xl font-black text-white tracking-tight">Creating your portfolio</h1>
+            <p className="text-xs text-slate-400 mt-1">Template: {templateId.charAt(0).toUpperCase() + templateId.slice(1)}</p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => router.back()}>Cancel</Button>
-            <Button variant="primary" onClick={handleSave} isLoading={isSaving}>Publish Portfolio</Button>
+            <Button variant="outline" onClick={() => router.back()} className="border-[#1E2336] text-slate-300 hover:bg-[#1E2336]">Cancel</Button>
+            <Button variant="primary" onClick={handleSave} isLoading={isSaving} className="bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white border-0 shadow-[0_0_15px_rgba(90,75,255,0.3)]">Publish Portfolio</Button>
           </div>
         </div>
       </div>
 
-      <div className="w-full px-4 md:px-6 py-6">
+      <div className="w-full px-4 md:px-6 py-10">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Form Side */}
-          <div className="w-full lg:w-[650px] shrink-0 bg-[#0F121E] rounded-2xl p-5 shadow-sm border border-[#1E2336] lg:sticky lg:top-[120px] h-[calc(100vh-140px)] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+          <div className="w-full lg:w-[650px] shrink-0 bg-[#0F121E] rounded-2xl p-5 shadow-sm border border-[#1E2336] lg:sticky lg:top-[114px] h-[calc(100vh-140px)] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
             <PortfolioForm data={data} onChange={setData} />
           </div>
 
           {/* Preview Side */}
-          <div className="flex-1 w-full lg:sticky lg:top-[120px] h-[calc(100vh-140px)]">
+          <div className="flex-1 w-full lg:sticky lg:top-[114px] h-[calc(100vh-140px)]">
             <LivePreview templateId={templateId} data={data} />
           </div>
         </div>
