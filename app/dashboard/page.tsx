@@ -7,35 +7,29 @@ import { fetchApi } from '@/lib/api';
 import { getSubdomainUrl } from '@/lib/config';
 import Button from '@/components/ui/Button';
 import { 
-  Eye, 
-  Users, 
-  MessageSquare, 
-  Activity,
-  ArrowRight,
-  TrendingUp,
-  AlertTriangle,
-  Lightbulb,
+  Sparkles, 
+  Wand2, 
+  Rocket, 
+  Globe, 
+  Palette, 
+  Check, 
+  Edit, 
+  ArrowUpLeft, 
+  Loader2, 
+  Bot, 
+  Layout, 
+  Laptop,
   CheckCircle2,
-  Server,
-  Plus,
-  ArrowUpRight,
-  ArrowDownRight,
-  MonitorPlay,
-  ShieldCheck,
-  Zap
+  ArrowRight
 } from "lucide-react";
 
-// Mock Data for Sparklines (SVG paths)
-const sparklineUp = "M 0 20 Q 10 15 20 20 T 40 10 T 60 15 T 80 5 T 100 0";
-const sparklineDown = "M 0 5 Q 10 10 20 5 T 40 15 T 60 10 T 80 20 T 100 25";
-const sparklineNeutral = "M 0 15 Q 10 10 20 15 T 40 10 T 60 15 T 80 10 T 100 12";
-
-// Mock Data
-const INTELLIGENCE_FEED = [
-  { id: 1, type: "alert", title: "Page views down 2%", desc: "Traffic from social media dropped. Check your recent Twitter links.", icon: AlertTriangle, color: "text-rose-400", bg: "bg-rose-500/10" },
-  { id: 2, type: "suggestion", title: "Action Suggestion", desc: "Add a call-to-action button to your 'About' section to improve conversion.", icon: Lightbulb, color: "text-amber-400", bg: "bg-amber-500/10" },
-  { id: 3, type: "event", title: "New Lead Captured", desc: "sarah@example.com submitted the contact form.", icon: MessageSquare, color: "text-indigo-400", bg: "bg-indigo-500/10" },
-  { id: 4, type: "system", title: "SSL Certificate Auto-Renewed", desc: "Your domain security is up to date.", icon: ShieldCheck, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+// قائمة بخطوات التوليد الوهمي للذكاء الاصطناعي لإضفاء لمسة تفاعلية فاخرة
+const GENERATION_STEPS = [
+  "تحليل تخصصك وصياغة الهيكل الأنسب...",
+  "تنسيق الألوان وتوزيع اللمسات المضيئة...",
+  "توليد العناوين والنصوص التسويقية الاحترافية...",
+  "صياغة نبذة شخصية (Bio) مخصصة لمجالك...",
+  "بناء موقعك الرقمي وجعله جاهزاً للانطلاق..."
 ];
 
 export default function DashboardPage() {
@@ -43,6 +37,13 @@ export default function DashboardPage() {
   const [portfolio, setPortfolio] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // حالات خاصة بمولد الذكاء الاصطناعي السحري (Interactive AI Mock Preview)
+  const [specialization, setSpecialization] = useState("");
+  const [generationState, setGenerationState] = useState<"idle" | "generating" | "completed">("idle");
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [generatedResult, setGeneratedResult] = useState<any>(null);
+
+  // جلب بيانات موقع المستخدم إن وجدت
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -58,320 +59,371 @@ export default function DashboardPage() {
     else setIsLoading(false);
   }, [user]);
 
+  // محاكاة خطوات التوليد السحرية بالذكاء الاصطناعي
+  useEffect(() => {
+    let interval: any;
+    if (generationState === "generating") {
+      interval = setInterval(() => {
+        setCurrentStepIndex((prev) => {
+          if (prev < GENERATION_STEPS.length - 1) {
+            return prev + 1;
+          } else {
+            clearInterval(interval);
+            // إعداد النتيجة المفترضة بناء على التخصص الذي أدخله المستخدم
+            const specLower = specialization.toLowerCase();
+            let name = "أحمد خالد";
+            let role = specialization || "مطور برمجيات";
+            let bio = "أقوم بتحويل الأفكار والتحديات البرمجية المعقدة إلى واجهات رقمية سلسة وتطبيقات فائقة الأداء تناسب احتياجات عملائك.";
+            let services = ["برمجة وتطوير الويب", "تصميم واجهات المستخدم UI/UX", "تحسين الأداء والحماية"];
+
+            if (specLower.includes("تصميم") || specLower.includes("مصمم") || specLower.includes("design") || specLower.includes("ui") || specLower.includes("ux")) {
+              name = "سارة عبد الرحمن";
+              role = "مصممة واجهات وتجربة المستخدم (UI/UX)";
+              bio = "أبتكر تصاميم رقمية متميزة ترتكز على سهولة الاستخدام وجمال التفاصيل لتمنح عملائك تجربة لا تُنسى.";
+              services = ["تصميم واجهات الويب وتطبيقات الجوال", "هندسة وتخطيط تجربة المستخدم", "بناء الأنظمة البصرية والهويات الرقمية"];
+            } else if (specLower.includes("برمج") || specLower.includes("مطور") || specLower.includes("ويب") || specLower.includes("developer") || specLower.includes("code")) {
+              name = "خالد مصطفى";
+              role = "مطور تطبيقات ويب متكاملة (Full-Stack)";
+              bio = "أصمم وأبني خوادم قوية وواجهات سريعة التجاوب باستخدام أحدث التقنيات البرمجية لتجسيد أفكارك على أرض الواقع.";
+              services = ["برمجة React & Next.js", "تطوير قواعد البيانات والـ APIs", "تحسين محركات البحث SEO"];
+            }
+
+            setGeneratedResult({ name, role, bio, services });
+            setGenerationState("completed");
+            return 0;
+          }
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [generationState, specialization]);
+
+  const handleGenerate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!specialization.trim()) return;
+    setGenerationState("generating");
+    setCurrentStepIndex(0);
+    setGeneratedResult(null);
+  };
+
   const portfolioUrl = user?.subdomain ? getSubdomainUrl(user.subdomain) : null;
+
   return (
-    <div className="flex-1 flex flex-col min-h-full bg-[#0B0F19] overflow-y-auto custom-scrollbar p-6 lg:p-8 pb-24 text-slate-200">
-      {/* Top Header & Global Nav Extensions */}
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div dir="rtl" className="font-cairo flex-1 flex flex-col min-h-full bg-[#0B0F19] overflow-y-auto custom-scrollbar p-6 lg:p-12 pb-24 text-slate-200 selection:bg-[#5A4BFF]/30 selection:text-white">
+      
+      {/* سكشن الترحيب الفاخر والأنيق */}
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-16 relative">
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#5A4BFF]/5 rounded-full blur-[80px] pointer-events-none" />
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-3">
-            Performance Snapshot
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Executive View</span>
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-[#5A4BFF]/10 to-cyan-500/10 text-[#5A4BFF] border border-[#5A4BFF]/20 backdrop-blur-sm">
+            لوحة التحكم الذكية
+          </span>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white mt-3 flex items-center gap-3">
+            مرحباً بك، {user?.username || "شريكنا العزيز"} 👋
           </h1>
-          <p className="text-slate-400 mt-1 text-sm">Real-time intelligence and conversion metrics for your digital assets.</p>
-        </div>
-        <div className="flex items-center gap-4">
-          {/* Always-on System Health Indicator */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/50 border border-slate-800/60 shadow-inner">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-xs font-medium text-slate-300 flex items-center gap-1">
-              <Server className="w-3 h-3 text-slate-500" />
-              System Healthy
-            </span>
-          </div>
+          <p className="text-slate-400 mt-2 text-sm max-w-xl leading-relaxed">
+            من هنا يمكنك بدء رحلتك في بناء وتعديل هويتك الرقمية الراقية والظهور باحترافية أمام عملائك.
+          </p>
         </div>
       </header>
 
-      {/* KPI Pulse (Ticker / Ribbon) */}
-      <div className="flex flex-nowrap overflow-x-auto custom-scrollbar gap-4 pb-4 mb-4 min-h-[120px]">
-        {/* KPI 1: Page Views */}
-        <div className="min-w-[240px] min-h-[120px] flex-1 bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group">
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Eye className="w-3.5 h-3.5 text-blue-400" /> Page Views
-            </span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5"/> 12.5%</span>
-          </div>
-          <div className="flex items-end justify-between z-10">
-            <h3 className="text-2xl font-bold text-white">24,592</h3>
-            {/* Minimalist Sparkline inside the card */}
-            <svg className="w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 25" preserveAspectRatio="none">
-              <path d={sparklineUp} fill="none" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-blue-500/5 to-transparent pointer-events-none" />
-        </div>
+      {/* القسم الأول: سكشن الترحيب والانطلاق الذكي (Hero Dashboard Section) */}
+      <section className="relative bg-[#0F121E]/60 backdrop-blur-xl border border-[#1E2336] rounded-3xl p-8 lg:p-12 mb-16 overflow-hidden shadow-2xl">
+        {/* أضواء خلفية متوهجة */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#5A4BFF]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* KPI 2: Unique Visitors */}
-        <div className="min-w-[240px] min-h-[120px] flex-1 bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group">
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-cyan-400" /> Unique Visitors
-            </span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded"><ArrowUpRight className="w-3 h-3 mr-0.5"/> 5.2%</span>
-          </div>
-          <div className="flex items-end justify-between z-10">
-            <h3 className="text-2xl font-bold text-white">8,439</h3>
-            <svg className="w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 25" preserveAspectRatio="none">
-              <path d={sparklineNeutral} fill="none" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none" />
-        </div>
-
-        {/* KPI 3: Form Submissions */}
-        <div className="min-w-[240px] min-h-[120px] flex-1 bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group">
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <MessageSquare className="w-3.5 h-3.5 text-purple-400" /> Form Submissions
-            </span>
-            <span className="text-xs font-medium text-rose-400 flex items-center bg-rose-500/10 px-1.5 py-0.5 rounded"><ArrowDownRight className="w-3 h-3 mr-0.5"/> 2.4%</span>
-          </div>
-          <div className="flex items-end justify-between z-10">
-            <h3 className="text-2xl font-bold text-white">142</h3>
-            <svg className="w-16 h-8 opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 25" preserveAspectRatio="none">
-              <path d={sparklineDown} fill="none" stroke="#C084FC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-purple-500/5 to-transparent pointer-events-none" />
-        </div>
-
-        {/* KPI 4: Portfolio Health Score */}
-        <div className="min-w-[240px] min-h-[120px] flex-1 bg-slate-900/40 backdrop-blur-xl border border-indigo-500/30 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden shadow-[0_0_15px_rgba(99,102,241,0.1)]">
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-              <Activity className="w-3.5 h-3.5 text-indigo-400" /> Health Score
-            </span>
-            <span className="text-xs font-medium text-indigo-300 bg-indigo-500/20 px-1.5 py-0.5 rounded border border-indigo-500/30">Excellent</span>
-          </div>
-          <div className="flex items-center gap-3 z-10">
-            <h3 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">94</h3>
-            <span className="text-sm text-slate-400">/ 100</span>
-          </div>
-          <div className="absolute right-0 bottom-0 top-0 w-24 bg-gradient-to-l from-indigo-500/10 to-transparent pointer-events-none" />
-        </div>
-      </div>
-
-      {/* Main Grid: Strategic Overview & Intelligence */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        
-        {/* Strategic Overview: Hybrid Chart & Funnel */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-2xl p-6 flex-1 flex flex-col">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-indigo-500" />
-                  Traffic Trend & Conversion Funnel
-                </h2>
-                <p className="text-sm text-slate-400">Aggregated view of visitor journey and volume over 30 days.</p>
-              </div>
-            </div>
-            
-            <div className="flex-1 flex flex-col md:flex-row gap-6">
-              {/* Left: Area Chart Placeholder */}
-              <div className="flex-1 rounded-xl border border-slate-800/50 bg-[#0A0D14]/80 p-4 relative overflow-hidden group min-h-[250px] flex flex-col">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xs text-slate-400 font-semibold uppercase">Volume Trend</span>
-                  <div className="flex gap-2 text-xs">
-                    <span className="flex items-center gap-1 text-slate-300"><div className="w-2 h-2 rounded-full bg-blue-500/50"></div> Views</span>
-                    <span className="flex items-center gap-1 text-slate-300"><div className="w-2 h-2 rounded-full bg-cyan-400"></div> Unique</span>
-                  </div>
-                </div>
-                
-                {/* Mock Chart Visualization */}
-                <div className="flex-1 w-full flex items-end justify-between gap-1 relative z-10 px-2 pb-2">
-                  {/* Mock Bars/Area simulation */}
-                  {[40, 55, 45, 70, 65, 80, 95, 85, 100, 90, 75, 85, 110, 105, 120].map((h, i) => (
-                    <div key={i} className="relative flex-1 flex items-end group/bar cursor-crosshair h-full">
-                      {/* Background Area Bar */}
-                      <div style={{height: `${h}%`}} className="w-full bg-blue-500/10 rounded-t-sm border-t border-blue-500/30 group-hover/bar:bg-blue-500/20 transition-all"></div>
-                      {/* Stacked Overlay (Unique visitors approx) */}
-                      <div style={{height: `${h * 0.4}%`}} className="absolute bottom-0 w-full bg-cyan-400/80 rounded-t-sm shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
-                    </div>
-                  ))}
-                </div>
-                {/* Grid Lines */}
-                <div className="absolute inset-y-12 inset-x-4 flex flex-col justify-between pointer-events-none opacity-20">
-                  <div className="border-t border-dashed border-slate-600 w-full"></div>
-                  <div className="border-t border-dashed border-slate-600 w-full"></div>
-                  <div className="border-t border-dashed border-slate-600 w-full"></div>
-                </div>
-              </div>
-
-              {/* Right: Condensed Funnel */}
-              <div className="w-full md:w-48 lg:w-56 flex flex-col gap-2 justify-center">
-                <span className="text-xs text-slate-400 font-semibold uppercase mb-2">Conversion Funnel</span>
-                
-                {/* Step 1 */}
-                <div className="relative w-full bg-slate-800/30 border border-slate-700/50 rounded-lg p-3 text-center">
-                  <div className="text-xs text-slate-400 mb-1">Total Visitors</div>
-                  <div className="text-lg font-bold text-white">8,439</div>
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-10 bg-slate-900 border border-slate-700 rounded-full px-2 py-0.5 text-[10px] text-cyan-400 shadow-sm">
-                    100%
-                  </div>
-                </div>
-                <div className="h-4 flex justify-center"><div className="w-px bg-slate-700/50"></div></div>
-                
-                {/* Step 2 */}
-                <div className="relative w-[90%] mx-auto bg-slate-800/40 border border-slate-700/50 rounded-lg p-3 text-center">
-                  <div className="text-xs text-slate-400 mb-1">Engaged (&gt;1m)</div>
-                  <div className="text-lg font-bold text-white">3,120</div>
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-10 bg-slate-900 border border-slate-700 rounded-full px-2 py-0.5 text-[10px] text-indigo-400 shadow-sm">
-                    37%
-                  </div>
-                </div>
-                <div className="h-4 flex justify-center"><div className="w-px bg-slate-700/50"></div></div>
-                
-                {/* Step 3 */}
-                <div className="relative w-[75%] mx-auto bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-3 text-center shadow-[0_0_15px_rgba(99,102,241,0.1)]">
-                  <div className="text-xs text-indigo-200 mb-1">Leads Captured</div>
-                  <div className="text-xl font-black text-indigo-400">142</div>
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-10 bg-indigo-900 border border-indigo-500 rounded-full px-2 py-0.5 text-[10px] text-white shadow-sm">
-                    1.68%
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Intelligence Feed */}
-        <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-2xl p-6 flex flex-col h-full">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Zap className="w-5 h-5 text-amber-400" />
-              Intelligence Feed
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          
+          {/* الجانب الأيمن: النصوص وزر البناء */}
+          <div className="lg:col-span-7 space-y-6 text-right">
+            <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight">
+              مرحباً بك في مركز إطلاق <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-l from-cyan-400 via-indigo-400 to-[#5A4BFF]">
+                هويتك الرقمية المتكاملة
+              </span>
             </h2>
-            <span className="flex items-center gap-1 text-xs font-medium text-slate-400 bg-slate-800/50 px-2 py-1 rounded-lg">
-              Live <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
-            </span>
+            <p className="text-slate-400 text-base leading-relaxed max-w-xl">
+              منصتنا تساعدك على بناء موقعك الشخصي وصفحة هبوطك الاحترافية في دقيقة واحدة باستخدام الذكاء الاصطناعي، بدون أي خبرة في البرمجة.
+            </p>
+            
+            <div className="pt-4 flex flex-wrap gap-4">
+              {portfolio ? (
+                <>
+                  <Link href="/create">
+                    <button className="px-8 py-4 bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white font-bold rounded-2xl shadow-[0_0_25px_rgba(90,75,255,0.35)] hover:shadow-[0_0_35px_rgba(90,75,255,0.5)] transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2.5">
+                      <Edit className="w-5 h-5" />
+                      تعديل موقعك الحالي
+                    </button>
+                  </Link>
+                  {portfolioUrl && (
+                    <a href={portfolioUrl} target="_blank" rel="noopener noreferrer">
+                      <button className="px-8 py-4 bg-slate-900/60 hover:bg-slate-800/80 text-cyan-400 border border-[#1E2336] font-bold rounded-2xl shadow-inner transition-all duration-300 flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-cyan-400" />
+                        زيارة الموقع
+                        <ArrowUpLeft className="w-4 h-4 text-slate-500" />
+                      </button>
+                    </a>
+                  )}
+                </>
+              ) : (
+                <Link href="/templates">
+                  <button className="px-8 py-4 bg-gradient-to-l from-[#5A4BFF] to-indigo-600 hover:from-[#4B3DE6] hover:to-indigo-500 text-white font-bold rounded-2xl shadow-[0_0_25px_rgba(90,75,255,0.4)] hover:shadow-[0_0_35px_rgba(90,75,255,0.6)] transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2.5">
+                    <Sparkles className="w-5 h-5 text-cyan-300 animate-pulse" />
+                    ابدأ بناء موقعك الآن
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
 
-          <div className="flex flex-col space-y-3">
-            {INTELLIGENCE_FEED.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.id} className="group p-4 rounded-xl bg-[#0A0D14]/80 border border-slate-800/50 hover:border-slate-700 transition-colors flex gap-4">
-                  <div className={`shrink-0 p-2.5 rounded-lg ${item.bg} h-fit`}>
-                    <Icon className={`w-4 h-4 ${item.color}`} />
+          {/* الجانب الأيسر: مجسم جرافيكي متوهج لموقع إنترنت مبني بالكامل بـ CSS */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            <div className="relative w-full max-w-[360px] h-[280px] flex items-center justify-center">
+              {/* توهج خلفي للموك أب */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#5A4BFF]/20 to-cyan-400/20 rounded-full blur-[60px] animate-pulse" />
+
+              {/* النافذة الرئيسية للموقع */}
+              <div className="absolute w-[280px] h-[190px] bg-slate-950/80 border border-[#1E2336] rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-500 hover:scale-105">
+                {/* شريط المتصفح */}
+                <div className="h-6 bg-[#0F121E] border-b border-[#1E2336] flex items-center px-3 gap-1.5 justify-start">
+                  <div className="w-2 h-2 rounded-full bg-rose-500/80" />
+                  <div className="w-2 h-2 rounded-full bg-amber-500/80" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                  <div className="w-24 h-3 bg-slate-900 rounded ml-2" />
+                </div>
+                {/* محتوى نافذة المتصفح */}
+                <div className="p-4 space-y-3">
+                  <div className="w-12 h-1.5 bg-[#5A4BFF]/80 rounded" />
+                  <div className="w-3/4 h-3 bg-slate-800 rounded mt-2" />
+                  <div className="w-1/2 h-2 bg-slate-800 rounded" />
+                  <div className="flex gap-2 pt-2">
+                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-[#1E2336]" />
+                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-[#1E2336]" />
+                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-[#1E2336]" />
+                  </div>
+                  <div className="w-full h-8 bg-[#5A4BFF]/10 border border-[#5A4BFF]/20 rounded-lg flex items-center justify-center">
+                    <div className="w-1/3 h-1.5 bg-[#5A4BFF] rounded" />
+                  </div>
+                </div>
+              </div>
+
+              {/* بطاقة الذكاء الاصطناعي العائمة في الأعلى واليمين */}
+              <div className="absolute top-4 -right-2 w-[160px] bg-[#0F121E]/90 backdrop-blur-xl border border-indigo-500/30 rounded-xl p-3.5 shadow-2xl flex items-center gap-3 animate-bounce [animation-duration:4s]">
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center shrink-0">
+                  <Bot className="w-4 h-4 text-indigo-400" />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <div className="w-10 h-1 bg-[#5A4BFF] rounded" />
+                  <div className="w-16 h-1.5 bg-slate-700 rounded" />
+                  <div className="w-12 h-1 bg-slate-800 rounded" />
+                </div>
+              </div>
+
+              {/* بطاقة الجوال العائمة في الأسفل واليسار */}
+              <div className="absolute bottom-2 -left-2 w-[100px] h-[160px] bg-slate-950/90 border border-cyan-500/30 rounded-2xl shadow-2xl p-2 flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                <div className="w-6 h-1 bg-slate-850 rounded-full mx-auto mb-2" />
+                <div className="flex-1 space-y-2">
+                  <div className="w-full h-10 bg-gradient-to-tr from-[#5A4BFF]/20 to-cyan-500/20 rounded-lg" />
+                  <div className="w-3/4 h-1.5 bg-slate-800 rounded" />
+                  <div className="w-1/2 h-1 bg-slate-800 rounded" />
+                  <div className="w-full h-5 bg-cyan-500/10 border border-cyan-500/20 rounded" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* القسم الثاني: كيف نساعدك؟ (The 3-Step Flow) */}
+      <section className="mb-16">
+        <div className="text-center mb-10">
+          <span className="text-xs font-bold text-cyan-400 tracking-wider uppercase">رحلة سهلة وسريعة</span>
+          <h3 className="text-2xl font-bold text-white mt-2">كيف تعمل منصة SmartFolio؟</h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* البطاقة الأولى */}
+          <div className="group bg-[#0F121E]/40 backdrop-blur-xl border border-[#1E2336] rounded-2xl p-6 transition-all duration-300 hover:border-[#5A4BFF]/50 hover:bg-[#0F121E]/60 flex flex-col justify-between h-full relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#5A4BFF]/2 rounded-full blur-[30px]" />
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#5A4BFF]/10 border border-[#5A4BFF]/20 flex items-center justify-center text-[#5A4BFF] group-hover:scale-110 transition-transform">
+                <Palette className="w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-bold text-white">1. اختر تصميمك</h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                تصفح مجموعة من القوالب العصرية المصممة بعناية لتناسب مختلف المجالات والتخصصات المهنية والعملية.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#1E2336]/40 text-xs font-semibold text-slate-500 group-hover:text-[#5A4BFF] transition-colors">
+              ابدأ بالخطوة الأولى
+            </div>
+          </div>
+
+          {/* البطاقة الثانية */}
+          <div className="group bg-[#0F121E]/40 backdrop-blur-xl border border-[#1E2336] rounded-2xl p-6 transition-all duration-300 hover:border-indigo-500/50 hover:bg-[#0F121E]/60 flex flex-col justify-between h-full relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/2 rounded-full blur-[30px]" />
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+                <Wand2 className="w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-bold text-white">2. الذكاء الاصطناعي يكتب عنك</h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                أدخل مجال عملك أو خبراتك البسيطة، ودع الذكاء الاصطناعي الذكي يقوم بصياغة النصوص والعناوين والسيرة الذاتية فوراً.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#1E2336]/40 text-xs font-semibold text-slate-500 group-hover:text-indigo-400 transition-colors">
+              ذكاء اصطناعي فائق
+            </div>
+          </div>
+
+          {/* البطاقة الثالثة */}
+          <div className="group bg-[#0F121E]/40 backdrop-blur-xl border border-[#1E2336] rounded-2xl p-6 transition-all duration-300 hover:border-cyan-500/50 hover:bg-[#0F121E]/60 flex flex-col justify-between h-full relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/2 rounded-full blur-[30px]" />
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                <Rocket className="w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-bold text-white">3. انشر موقعك للعالم</h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                اختر الرابط الفرعي الخاص بك (Subdomain) واطلق موقعك بضغطة زر لتبدأ فوراً في استقبال عملائك وعرض مهاراتك.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#1E2336]/40 text-xs font-semibold text-slate-500 group-hover:text-cyan-400 transition-colors">
+              حضور رقمي فوري
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* القسم الثالث: لوحة التحكم بالذكاء الاصطناعي (AI Quick Generator Preview) */}
+      <section className="relative bg-[#0F121E]/60 backdrop-blur-xl border border-[#1E2336] rounded-3xl p-8 lg:p-10 overflow-hidden shadow-2xl">
+        <div className="absolute top-0 left-0 w-80 h-80 bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="max-w-3xl mx-auto text-center space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold">
+            <Bot className="w-3.5 h-3.5" />
+            التجربة التفاعلية
+          </div>
+          
+          <h3 className="text-2xl font-bold text-white">المولد السحري السريع للذكاء الاصطناعي</h3>
+          <p className="text-slate-400 text-sm leading-relaxed max-w-xl mx-auto">
+            اكتب تخصصك هنا (مثلاً: مصمم واجهات، مطور برمجيات، مصور فوتوغرافي) لترى كيف يمكن للذكاء الاصطناعي صياغة وتوزيع الهيكل الكامل لموقعك في ثوانٍ معدودة.
+          </p>
+
+          {/* حقل الإدخال وزر التوليد */}
+          <form onSubmit={handleGenerate} className="flex flex-col sm:flex-row gap-3 items-stretch max-w-lg mx-auto">
+            <input 
+              type="text" 
+              value={specialization}
+              onChange={(e) => setSpecialization(e.target.value)}
+              placeholder="أدخل تخصصك هنا..."
+              className="flex-1 px-4 py-3 bg-[#0A0D14]/75 border border-[#1E2336] rounded-2xl text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#5A4BFF] focus:ring-2 focus:ring-[#5A4BFF]/20 text-sm transition-all"
+              disabled={generationState === "generating"}
+            />
+            <button 
+              type="submit" 
+              className="px-6 py-3 bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white text-sm font-bold rounded-2xl transition-all shadow-[0_0_15px_rgba(90,75,255,0.25)] flex items-center justify-center gap-2 hover:scale-102 shrink-0 disabled:opacity-50"
+              disabled={generationState === "generating" || !specialization.trim()}
+            >
+              {generationState === "generating" ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  جاري التوليد...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="w-4 h-4 text-cyan-300" />
+                  توليد بواسطة AI
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* شريط التحميل لمحاكاة الذكاء الاصطناعي */}
+          {generationState === "generating" && (
+            <div className="max-w-md mx-auto space-y-3 mt-8 p-6 bg-slate-950/40 border border-[#1E2336] rounded-2xl text-right animate-pulse">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400">خطوة المعالجة الحالية:</span>
+                <span className="text-[#5A4BFF] font-bold">{Math.round(((currentStepIndex + 1) / GENERATION_STEPS.length) * 100)}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-[#1E2336] rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-l from-[#5A4BFF] to-cyan-400 transition-all duration-500 rounded-full"
+                  style={{ width: `${((currentStepIndex + 1) / GENERATION_STEPS.length) * 100}%` }}
+                />
+              </div>
+              <p className="text-xs text-[#5A4BFF] font-bold transition-all duration-300 flex items-center gap-2">
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                {GENERATION_STEPS[currentStepIndex]}
+              </p>
+            </div>
+          )}
+
+          {/* بطاقة النتائج الناتجة من الذكاء الاصطناعي كمعاينة حية مذهلة */}
+          {generationState === "completed" && generatedResult && (
+            <div className="max-w-2xl mx-auto mt-8 bg-slate-950/60 border-2 border-indigo-500/20 rounded-3xl p-6 lg:p-8 text-right shadow-2xl relative animate-fadeIn">
+              {/* تأثير توهج على أطراف البطاقة */}
+              <div className="absolute -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-tr from-[#5A4BFF]/10 to-cyan-400/10 rounded-3xl -z-10 blur-sm" />
+              
+              <div className="flex items-center justify-between border-b border-[#1E2336] pb-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                    <Layout className="w-5 h-5 text-cyan-400" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-200 mb-1 group-hover:text-white transition-colors">{item.title}</h4>
-                    <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
-                    
-                    {/* Action Suggestion Link */}
-                    {item.type === 'suggestion' && (
-                      <button className="mt-2 text-xs font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors">
-                        Apply Suggestion <ArrowRight className="w-3 h-3" />
-                      </button>
-                    )}
-                    {item.type === 'alert' && (
-                      <button className="mt-2 text-xs font-medium text-rose-400 hover:text-rose-300 flex items-center gap-1 transition-colors">
-                        Investigate <ArrowRight className="w-3 h-3" />
-                      </button>
-                    )}
+                    <h4 className="text-sm font-bold text-white">معاينة تصميمك السحري</h4>
+                    <p className="text-[10px] text-slate-500">تم بناؤه بالكامل بواسطة SmartFolio AI</p>
                   </div>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Portfolio Hub (Bottom Section) */}
-      <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800/60 rounded-2xl p-6 relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
-        
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 relative z-10 gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-white flex items-center gap-2 mb-1">
-              <MonitorPlay className="w-5 h-5 text-cyan-400" />
-              Dynamic Portfolio Hub
-            </h2>
-            <p className="text-sm text-slate-400">Manage and preview your active digital assets and configurations.</p>
-          </div>
-          <div className="flex gap-3">
-            {portfolio && (
-              <Link href="/create">
-                <Button className="bg-slate-800 hover:bg-slate-700 text-white border-0 shadow-sm rounded-xl text-sm px-4">
-                  Edit Current Portfolio
-                </Button>
-              </Link>
-            )}
-            <Link href="/templates">
-              <Button className="bg-indigo-600 hover:bg-indigo-500 text-white border-0 shadow-[0_0_15px_rgba(99,102,241,0.3)] rounded-xl text-sm px-4 gap-2 flex items-center">
-                <Plus className="w-4 h-4" />
-                Create New Portfolio
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Thumbnail Grid & Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-          
-          {portfolio ? (
-            <>
-              {/* Active Portfolio Thumbnail */}
-              <div className="md:col-span-1 bg-[#0A0D14] border border-indigo-500/30 rounded-xl overflow-hidden group cursor-pointer relative shadow-[0_0_20px_rgba(99,102,241,0.05)]">
-                <div className="absolute top-2 right-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full z-10 backdrop-blur-sm">
-                  LIVE
-                </div>
-                {/* Mock Thumbnail Image area */}
-                <div className="h-32 bg-slate-900 border-b border-slate-800 relative overflow-hidden flex flex-col">
-                  {/* Wireframe UI */}
-                  <div className="h-4 bg-slate-950 border-b border-slate-800 flex items-center px-2 gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
-                  </div>
-                  <div className="flex-1 p-3 flex flex-col gap-2 opacity-50 group-hover:scale-105 transition-transform duration-500">
-                    <div className="w-1/2 h-3 bg-slate-800 rounded"></div>
-                    <div className="w-3/4 h-2 bg-slate-800 rounded"></div>
-                    <div className="w-full flex gap-2 mt-auto">
-                      <div className="flex-1 h-8 bg-indigo-500/20 rounded"></div>
-                      <div className="flex-1 h-8 bg-slate-800 rounded"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <h4 className="text-sm font-semibold text-white truncate">{portfolio?.data?.name || 'My Portfolio'}</h4>
-                  <p className="text-xs text-slate-400 mt-1 truncate">{portfolioUrl?.replace('https://', '') || 'Not configured'}</p>
-                </div>
-                {/* Hover overlay link */}
-                {portfolioUrl && (
-                  <a href={portfolioUrl} target="_blank" rel="noopener noreferrer" className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-[1px]">
-                    <span className="bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1 transform translate-y-2 group-hover:translate-y-0 transition-all">
-                      View Live <ArrowUpRight className="w-3 h-3" />
-                    </span>
-                  </a>
-                )}
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> جاهز للنشر
+                </span>
               </div>
 
-              {/* Add New Thumbnail Box */}
-              <Link href="/templates" className="md:col-span-1 border-2 border-dashed border-slate-700/50 rounded-xl flex flex-col items-center justify-center h-full min-h-[180px] hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all group cursor-pointer text-slate-500 hover:text-indigo-400">
-                <div className="w-10 h-10 rounded-full bg-slate-800/50 group-hover:bg-indigo-500/20 flex items-center justify-center mb-2 transition-colors">
-                  <Plus className="w-5 h-5" />
+              {/* الهيكل التجريبي المولد */}
+              <div className="space-y-6">
+                <div>
+                  <span className="text-[10px] font-bold text-[#5A4BFF] uppercase tracking-widest">قسم الترحيب والـ Hero</span>
+                  <h5 className="text-xl font-extrabold text-white mt-1">{generatedResult.role}</h5>
+                  <p className="text-slate-400 text-xs leading-relaxed mt-2 bg-slate-900/40 p-3 rounded-xl border border-[#1E2336]/40">
+                    {generatedResult.bio}
+                  </p>
                 </div>
-                <span className="text-sm font-medium">Add Variation</span>
-              </Link>
-            </>
-          ) : (
-            <div className="md:col-span-4 py-8 flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center mb-4 border border-slate-800">
-                <MonitorPlay className="w-8 h-8 text-slate-600" />
+
+                <div>
+                  <span className="text-[10px] font-bold text-[#5A4BFF] uppercase tracking-widest">الخدمات المهنية المقترحة</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
+                    {generatedResult.services.map((service: string, index: number) => (
+                      <div key={index} className="bg-[#0F121E]/60 border border-[#1E2336] p-3 rounded-xl text-center flex items-center justify-center gap-2 hover:border-indigo-500/30 transition-all">
+                        <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span className="text-xs font-semibold text-slate-200">{service}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">No Active Portfolios</h3>
-              <p className="text-sm text-slate-400 max-w-md">You haven't set up your digital presence yet. Create your first portfolio to start tracking insights and generating leads.</p>
+
+              {/* دعوة للإجراء بعد تجربة المولد */}
+              <div className="mt-8 pt-6 border-t border-[#1E2336]/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-xs text-slate-450">هل أعجبتك هذه النتيجة؟ اطلق موقعك الحقيقي الآن مع تحكم كامل بالبيانات والألوان.</p>
+                <Link href="/templates" className="shrink-0">
+                  <button className="px-5 py-2.5 bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white text-xs font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(90,75,255,0.2)] flex items-center gap-2">
+                    ابدأ موقعك الحقيقي
+                    <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                  </button>
+                </Link>
+              </div>
+
             </div>
           )}
 
         </div>
-      </div>
+      </section>
 
     </div>
   );

@@ -40,16 +40,16 @@ export default function Sidebar() {
   }, [user]);
 
   const navItems = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'My Templates', href: '/my-templates', icon: FolderOpen },
-    { name: 'Templates', href: '/templates', icon: Layers },
-    ...(user ? [{ name: 'Profile', href: '/profile', icon: User }] : []),
+    { name: 'الرئيسية', href: '/', icon: Home },
+    { name: 'مواقعي', href: '/my-templates', icon: FolderOpen },
+    { name: 'قوالب التصميم', href: '/templates', icon: Layers },
+    ...(user ? [{ name: 'الملف الشخصي', href: '/profile', icon: User }] : []),
   ];
 
   return (
     <aside
       className={`
-        bg-[#0F121E] border-r border-[#1E2336] flex flex-col py-6 hidden md:flex h-screen shrink-0 transition-all duration-300
+        bg-[#0F121E] border-l border-[#1E2336] flex flex-col py-6 hidden md:flex h-screen shrink-0 transition-all duration-300
         ${isExpanded ? 'w-64' : 'w-20 items-center'}
       `}
     >
@@ -70,7 +70,7 @@ export default function Sidebar() {
             <button
               onClick={() => setIsExpanded(false)}
               className="w-9 h-9 flex items-center justify-center rounded-xl text-[#6B7280] hover:text-white hover:bg-[#1E2336] transition-colors"
-              title="Collapse Sidebar"
+              title="طي القائمة"
             >
               <X size={20} />
             </button>
@@ -80,7 +80,7 @@ export default function Sidebar() {
           <button
             onClick={() => setIsExpanded(true)}
             className="w-9 h-9 bg-[#5A4BFF] rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(90,75,255,0.4)] hover:bg-[#4B3DE6] transition-colors"
-            title="Expand Sidebar"
+            title="توسيع القائمة"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M4 6H20M4 12H20M4 18H20" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -131,13 +131,13 @@ export default function Sidebar() {
                 text-emerald-400 hover:text-emerald-300 hover:bg-[#1E2336]
                 ${isExpanded ? 'px-3 py-3 gap-3' : 'w-12 h-12 justify-center'}
               `}
-              title={!isExpanded ? 'View Portfolios' : undefined}
+              title={!isExpanded ? 'معاينة الموقع' : undefined}
             >
               <ExternalLink size={20} strokeWidth={2} className="shrink-0" />
               {isExpanded && (
                 <>
-                  <span className="font-semibold text-sm whitespace-nowrap flex-1 text-left">
-                    View Portfolio
+                  <span className="font-semibold text-sm whitespace-nowrap flex-1 text-right">
+                    معاينة الموقع
                   </span>
                   <ChevronDown
                     size={16}
@@ -149,7 +149,7 @@ export default function Sidebar() {
 
             {/* Expanded subdomain list */}
             {isExpanded && portfoliosOpen && (
-              <div className="mt-1 ml-3 pl-3 border-l border-[#1E2336] flex flex-col gap-0.5">
+              <div className="mt-1 mr-3 pr-3 border-r border-[#1E2336] flex flex-col gap-0.5">
                 {portfolios.map((p) => {
                   const url = getSubdomainUrl(p.subdomain);
                   const label = p.subdomain || p.templateId;
@@ -163,7 +163,7 @@ export default function Sidebar() {
                     >
                       <Globe size={13} className="shrink-0 text-emerald-500/60 group-hover:text-emerald-400" />
                       <span className="text-xs font-medium truncate">{label}</span>
-                      <ExternalLink size={11} className="shrink-0 ml-auto opacity-0 group-hover:opacity-60 transition-opacity" />
+                      <ExternalLink size={11} className="shrink-0 mr-auto opacity-0 group-hover:opacity-60 transition-opacity" />
                     </a>
                   );
                 })}
@@ -178,10 +178,10 @@ export default function Sidebar() {
               flex items-center rounded-xl transition-all duration-200 text-[#3A4055] cursor-not-allowed w-full
               ${isExpanded ? 'px-3 py-3 gap-3' : 'w-12 h-12 justify-center'}
             `}
-            title={!isExpanded ? 'No portfolios yet' : undefined}
+            title={!isExpanded ? 'لا توجد مواقع بعد' : undefined}
           >
             <ExternalLink size={20} strokeWidth={2} className="shrink-0" />
-            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">View Portfolio</span>}
+            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">معاينة الموقع</span>}
           </button>
         ) : null}
       </nav>
@@ -195,10 +195,10 @@ export default function Sidebar() {
               flex items-center rounded-xl text-[#6B7280] hover:text-red-400 hover:bg-[#1E2336] transition-all duration-200
               ${isExpanded ? 'px-3 py-3 gap-3 w-full' : 'w-12 h-12 justify-center'}
             `}
-            title={!isExpanded ? 'Logout' : undefined}
+            title={!isExpanded ? 'تسجيل الخروج' : undefined}
           >
             <LogOut size={20} strokeWidth={2} className="shrink-0" />
-            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">Logout</span>}
+            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">تسجيل الخروج</span>}
           </button>
         ) : (
           <Link
@@ -207,10 +207,10 @@ export default function Sidebar() {
               flex items-center rounded-xl text-[#5A4BFF] hover:text-white hover:bg-[#5A4BFF] transition-all duration-200
               ${isExpanded ? 'px-3 py-3 gap-3 w-full' : 'w-12 h-12 justify-center'}
             `}
-            title={!isExpanded ? 'Login' : undefined}
+            title={!isExpanded ? 'تسجيل الدخول' : undefined}
           >
             <User size={20} strokeWidth={2} className="shrink-0" />
-            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">Login</span>}
+            {isExpanded && <span className="font-semibold text-sm whitespace-nowrap">تسجيل الدخول</span>}
           </Link>
         )}
       </div>

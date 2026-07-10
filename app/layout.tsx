@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Cairo } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import Sidebar from "@/components/layout/Sidebar";
@@ -17,6 +17,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: "Portfolify | Create Your Portfolio in Minutes",
   description: "The easiest way to build and share your professional portfolio.",
@@ -29,7 +35,7 @@ export default async function RootLayout({
 }>) {
   const headersList = await headers();
   const host = headersList.get('host') || '';
-  
+
   let isSubdomain = false;
   if (isLocalhost(host)) {
     const parts = host.split('.');
@@ -48,12 +54,12 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${cairo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#0B0F19] text-slate-100">
         <AuthProvider>
           {!isSubdomain ? (
-            <div className="flex h-screen w-full overflow-hidden">
+            <div className="flex h-screen w-full overflow-hidden font-cairo" dir="rtl">
               <Sidebar />
               <div className="flex flex-col flex-1 overflow-hidden w-full">
                 <DashboardHeader />

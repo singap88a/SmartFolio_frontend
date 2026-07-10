@@ -30,13 +30,13 @@ export default function DashboardHeader() {
       {/* Search */}
       <div className="flex-1 max-w-md mx-8 hidden md:block">
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <Search size={18} className="text-[#6B7280]" />
           </div>
           <input 
             type="text" 
-            placeholder="Search portfolios..." 
-            className="block w-full pl-10 pr-3 py-2 border border-[#1E2336] rounded-xl leading-5 bg-[#0F121E] text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] sm:text-sm transition-colors"
+            placeholder="البحث عن المواقع..." 
+            className="block w-full pr-10 pl-3 py-2 border border-[#1E2336] rounded-xl leading-5 bg-[#0F121E] text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#5A4BFF] focus:border-[#5A4BFF] sm:text-sm transition-colors"
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function DashboardHeader() {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-              <div className="absolute right-0 mt-3 w-56 bg-[#0F121E] border border-[#1E2336] rounded-xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute left-0 mt-3 w-56 bg-[#0F121E] border border-[#1E2336] rounded-xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="px-4 py-2 border-b border-[#1E2336] md:hidden">
                   <span className="block text-sm font-semibold text-white">{user?.username}</span>
                   <span className="block text-xs text-[#6B7280] truncate">{user?.email}</span>
@@ -78,11 +78,11 @@ export default function DashboardHeader() {
                 
                 <Link 
                   href="/profile" 
-                  className="w-full text-left px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#1E2336] flex items-center gap-2 transition-colors"
+                  className="w-full text-right px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#1E2336] flex items-center gap-2 transition-colors"
                   onClick={() => setDropdownOpen(false)}
                 >
                   <UserIcon size={16} />
-                  My Profile
+                  ملفي الشخصي
                 </Link>
                 
                 <div className="h-px bg-[#1E2336] my-1 mx-2"></div>
@@ -92,17 +92,17 @@ export default function DashboardHeader() {
                     setDropdownOpen(false);
                     logout();
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-[#1E2336] flex items-center gap-2 transition-colors"
+                  className="w-full text-right px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-[#1E2336] flex items-center gap-2 transition-colors"
                 >
                   <LogOut size={16} />
-                  Logout
+                  تسجيل الخروج
                 </button>
               </div>
             )}
           </div>
         ) : (
           <a href="/login" className="px-4 py-2 bg-[#5A4BFF] hover:bg-[#4B3DE6] text-white rounded-lg text-sm font-semibold transition-colors">
-            Login
+            تسجيل الدخول
           </a>
         )}
       </div>
