@@ -12,6 +12,10 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const hostname = req.headers.get('host') || '';
 
+  // تمرير المسار للـ layout لمعرفة ما إذا كانت الصفحة بورتفوليو
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-pathname', url.pathname);
+
   let subdomain = '';
   
   // Local development
@@ -32,8 +36,12 @@ export function middleware(req: NextRequest) {
   if (subdomain && subdomain !== 'www') {
     // e.g. user.domain.com/ -> rewrites to /user
     // e.g. user.domain.com/contact -> rewrites to /user/contact
-    return NextResponse.rewrite(new URL(`/${subdomain}${url.pathname}`, req.url));
+    return NextResponse.rewrite(new URL(`/${subdomain}${url.pathname}`, req.url), {
+      request: { headers: requestHeaders },
+    });
   }
 
-  return NextResponse.next();
+  return NextResponse.next({
+    request: { headers: requestHeaders },
+  });
 }

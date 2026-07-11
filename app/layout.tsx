@@ -35,6 +35,7 @@ export default async function RootLayout({
 }>) {
   const headersList = await headers();
   const host = headersList.get('host') || '';
+  const pathname = headersList.get('x-pathname') || '';
 
   let isSubdomain = false;
   if (isLocalhost(host)) {
@@ -49,6 +50,11 @@ export default async function RootLayout({
     }
   }
 
+  const DASHBOARD_ROUTES = ['/dashboard', '/create', '/discover', '/my-templates', '/profile', '/templates', '/login', '/register'];
+  const isDashboardRoute = DASHBOARD_ROUTES.some(route => pathname.startsWith(route)) || pathname === '/';
+  
+  // إخفاء الشريط الجانبي إذا كان الدومين فرعي، أو إذا كان المسار يخص قالب البورتفوليو
+  const hideSidebar = isSubdomain || (!isDashboardRoute && pathname !== '');
 
   return (
     <html
@@ -58,7 +64,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#0B0F19] text-slate-100">
         <AuthProvider>
-          {!isSubdomain ? (
+          {!hideSidebar ? (
             <div className="flex h-screen w-full overflow-hidden font-cairo" dir="rtl">
               <Sidebar />
               <div className="flex flex-col flex-1 overflow-hidden w-full">
