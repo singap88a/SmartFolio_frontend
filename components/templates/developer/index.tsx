@@ -166,7 +166,7 @@ const DeveloperTemplate = ({ data }: TemplateProps) => {
                       setIsMobileMenuOpen(false);
                       setTimeout(() => {
                         if (link.url.startsWith('#')) scrollTo(link.url.substring(1));
-                        else window.open(link, '_blank');
+                        else window.open(link.url, '_blank');
                       }, 300);
                     }}
                     className={`text-left text-base font-medium py-3 border-b ${borderSubtle} ${textMuted} hover:${textMain} transition-colors`}

@@ -146,7 +146,7 @@ const CreativeTemplate = ({ data }: TemplateProps) => {
                       setIsMobileMenuOpen(false);
                       setTimeout(() => {
                         if (link.url.startsWith('#')) scrollTo(link.url.substring(1));
-                        else window.open(link, '_blank');
+                        else window.open(link.url, '_blank');
                       }, 300);
                     }}
                     className={`text-left text-2xl font-serif font-light hover:italic transition-all border-b ${borderSubtle} pb-4`}
