@@ -1,10 +1,10 @@
 'use client';
-import React from 'react';
-import Button from '../../ui/Button';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as SolidIcons from '@fortawesome/free-solid-svg-icons';
 import * as BrandIcons from '@fortawesome/free-brands-svg-icons';
+import { TemplateProps } from '../types';
 
 const DynamicIcon = ({ name, className }: { name: string, className?: string }) => {
   if (!name) return null;
@@ -12,328 +12,435 @@ const DynamicIcon = ({ name, className }: { name: string, className?: string }) 
   return <FontAwesomeIcon icon={iconDef} className={className} />;
 };
 
-import { TemplateProps } from '../types';
-
 const DeveloperTemplate = ({ data }: TemplateProps) => {
-  const accentColor = data.themeColor || '#4f46e5';
+  const [isDark, setIsDark] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleScroll = () => {
+      const sections = ['hero', 'skills', 'services', 'projects', 'newsletter'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!mounted) return null;
+
+  const primaryColor = data.themeColor || '#0070F3'; 
   
+  // Premium Theme Variables
+  const bgMain = isDark ? 'bg-[#000000]' : 'bg-[#FAFAFA]';
+  const bgSub = isDark ? 'bg-[#111111]' : 'bg-[#FFFFFF]';
+  const bgGlass = isDark ? 'bg-[#000000]/60' : 'bg-[#FFFFFF]/70';
+  
+  const textMain = isDark ? 'text-[#EDEDED]' : 'text-[#171717]';
+  const textMuted = isDark ? 'text-[#A1A1AA]' : 'text-[#71717A]';
+  
+  const borderSubtle = isDark ? 'border-[#333333]/50' : 'border-[#E5E5E5]';
+  const borderHover = isDark ? 'border-[#444444]' : 'border-[#D4D4D4]';
+  
+  const getGlow = (opacity: number) => {
+    return `0 0 40px ${primaryColor}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`;
+  };
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-full bg-slate-950 text-slate-100 font-mono selection:bg-indigo-500/30">
-      {/* 1. Power Bar */}
-      <div className="w-full h-2" style={{ backgroundColor: accentColor }}></div>
+    // overflow-x-clip prevents horizontal scroll without breaking sticky positioning
+    <div dir="ltr" className={`min-h-screen font-sans transition-colors duration-500 ${bgMain} ${textMain} selection:bg-black/10 dark:selection:bg-white/20 relative overflow-x-clip`} style={{ WebkitFontSmoothing: 'antialiased' }}>
       
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <div className="flex items-center gap-3">
+      {/* Background Blended Glows Spread Across the Page */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+        {/* Hero Glow */}
+        <div className={`absolute top-[-5%] left-[-10%] w-[50%] h-[800px] rounded-full blur-[150px] opacity-20 ${isDark ? 'bg-blue-900' : 'bg-blue-200'}`} style={{ backgroundColor: primaryColor }}></div>
+        {/* Mid Page Glow */}
+        <div className={`absolute top-[35%] right-[-10%] w-[40%] h-[800px] rounded-full blur-[150px] opacity-[0.15] ${isDark ? 'bg-purple-900' : 'bg-purple-200'}`}></div>
+        {/* Bottom Page Glow */}
+        <div className={`absolute bottom-[5%] left-[10%] w-[50%] h-[800px] rounded-full blur-[150px] opacity-[0.15] ${isDark ? 'bg-indigo-900' : 'bg-indigo-200'}`} style={{ backgroundColor: primaryColor }}></div>
+      </div>
+
+      {/* 1. Navbar */}
+      <header className={`sticky top-0 inset-x-0 z-50 backdrop-blur-xl ${bgGlass} border-b ${borderSubtle} transition-all duration-300`}>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-16 flex justify-between items-center">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             {data.logoType === 'image' && data.logo ? (
-              <img src={data.logo} alt="Logo" className="h-8 w-auto object-contain" />
+              <img src={data.logo} alt="Logo" className="h-6 w-auto object-contain" />
             ) : (
-              <div className="text-xl font-bold tracking-tight flex items-center gap-1" style={{ color: accentColor }}>
-                <span>{data.logo || data.name?.split(' ')[0] || 'DEV'}</span>
-                <span className="text-white">.</span>
-              </div>
+              <span className="font-semibold text-sm tracking-tight">{data.logo || data.name?.split(' ')[0]}</span>
             )}
           </div>
-          <div className="flex gap-8 items-center">
-            <nav className="hidden md:flex gap-8 items-center">
-              {data.navbarLinks?.map((link, i) => (
-                <a key={i} href={link.url} onClick={(e) => {
-                  if (link.url.startsWith('#')) {
-                    e.preventDefault();
-                    document.getElementById(link.url.substring(1))?.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }} className="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">
+
+          <nav className="hidden md:flex items-center gap-1">
+            {data.navbarLinks?.map((link, i) => {
+              const isActive = activeSection === link.url.substring(1);
+              return (
+                <button
+                  key={i}
+                  onClick={() => link.url.startsWith('#') ? scrollTo(link.url.substring(1)) : window.open(link.url, '_blank')}
+                  className={`relative px-4 py-1.5 text-[13px] font-medium rounded-full transition-colors ${isActive ? textMain : textMuted + ' hover:' + textMain}`}
+                >
+                  {isActive && (
+                    <motion.div layoutId="nav-pill" className={`absolute inset-0 rounded-full ${isDark ? 'bg-white/10' : 'bg-black/5'} -z-10`} transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
+                  )}
                   {link.label}
-                </a>
-              ))}
-            </nav>
-            <div className="hidden md:block w-px h-5 bg-slate-800 mx-2"></div>
-            <Button className="rounded-full px-6 py-2 text-sm font-medium transition-transform hover:scale-105" style={{ backgroundColor: accentColor, color: '#fff' }} onClick={() => {
-              const link = data.navbarCtaLink || '#contact';
-              if (link.startsWith('#')) {
-                document.getElementById(link.substring(1))?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.open(link, '_blank');
-              }
-            }}>
-              {data.navbarCtaText || 'Hire Me'}
-            </Button>
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsDark(!isDark)}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isDark ? 'text-[#A1A1AA] hover:text-white hover:bg-white/10' : 'text-[#71717A] hover:text-black hover:bg-black/5'}`}
+            >
+              <FontAwesomeIcon icon={isDark ? SolidIcons.faSun : SolidIcons.faMoon} className="text-sm" />
+            </button>
+
+            <button 
+              className={`hidden sm:flex h-8 items-center px-4 rounded-full text-[13px] font-medium transition-all shadow-sm`}
+              style={{ backgroundColor: primaryColor, color: '#fff', boxShadow: getGlow(0.2) }}
+              onClick={() => {
+                const link = data.navbarCtaLink || '#contact';
+                if (link.startsWith('#')) scrollTo(link.substring(1));
+                else window.open(link, '_blank');
+              }}
+            >
+              {data.navbarCtaText || 'Contact'}
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="md:hidden flex items-center justify-center w-8 h-8 rounded-full bg-black/5 dark:bg-white/5"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <FontAwesomeIcon icon={SolidIcons.faBars} className={`text-sm ${textMain}`} />
+            </button>
           </div>
         </div>
       </header>
 
-      {/* 2. Hero Section */}
-      <section id="hero" className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="inline-block px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-bold mb-6" style={{ color: accentColor }}>
-            {data.jobTitle || 'AVAILABLE FOR HIRE'}
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-[1.1]">
-            {data.name || 'Your Name'} <br />
-            <span style={{ color: accentColor }}>Creative Dev.</span>
-          </h1>
-          <p className="text-lg text-slate-400 max-w-xl mb-10 leading-relaxed">
-            {data.bio || "I'm a senior software engineer specializing in building exceptional digital experiences."}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            {data.cvLink && (
-              <Button size="lg" style={{ backgroundColor: accentColor }} onClick={() => window.open(data.cvLink, '_blank')}>Download CV</Button>
-            )}
-            {data.whatsapp && (
-              <Button variant="outline" size="lg" onClick={() => window.open(`https://wa.me/${data.whatsapp?.replace(/\D/g, '')}`, '_blank')}>WhatsApp</Button>
-            )}
-            <Button variant="outline" size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Let&apos;s Talk</Button>
-          </div>
-        </motion.div>
-        
-        <motion.div 
-          className="relative"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full opacity-50"></div>
-          <div className="relative aspect-square rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl">
-            <img 
-              src={data.heroImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"} 
-              alt={data.name} 
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-            />
-          </div>
-        </motion.div>
-      </section>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            className="fixed inset-0 z-[100] flex justify-end"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
+            <motion.div 
+              className={`relative w-[280px] h-full ${bgSub} border-l ${borderSubtle} shadow-2xl flex flex-col p-6`}
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <div className="flex justify-between items-center mb-10">
+                <span className="font-bold text-sm tracking-tight">{data.logo || data.name?.split(' ')[0]}</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="w-8 h-8 flex items-center justify-center bg-black/5 dark:bg-white/5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                  <FontAwesomeIcon icon={SolidIcons.faTimes} />
+                </button>
+              </div>
+              
+              <nav className="flex flex-col gap-4">
+                {data.navbarLinks?.map((link, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setTimeout(() => {
+                        if (link.url.startsWith('#')) scrollTo(link.url.substring(1));
+                        else window.open(link, '_blank');
+                      }, 300);
+                    }}
+                    className={`text-left text-base font-medium py-3 border-b ${borderSubtle} ${textMuted} hover:${textMain} transition-colors`}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </nav>
 
-      <section id="skills" className="py-20 bg-slate-900/50">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-12 flex items-center gap-4">
-            Expertise <span className="h-px flex-1 bg-slate-800"></span>
-          </h2>
+              <button 
+                className={`mt-auto h-12 w-full rounded-full text-sm font-semibold transition-transform shadow-lg flex items-center justify-center gap-2`}
+                style={{ backgroundColor: primaryColor, color: '#fff' }}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setTimeout(() => {
+                    const link = data.navbarCtaLink || '#contact';
+                    if (link.startsWith('#')) scrollTo(link.substring(1));
+                    else window.open(link, '_blank');
+                  }, 300);
+                }}
+              >
+                {data.navbarCtaText || 'Contact'}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="max-w-[1400px] mx-auto px-6 md:px-12 pt-24 pb-24 space-y-32">
+        
+        {/* 2. Hero Section */}
+        <section id="hero" className="relative flex flex-col lg:flex-row gap-16 items-center min-h-[60vh]">
+          <motion.div className="flex-1 relative z-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${borderSubtle} ${bgSub} text-[12px] font-medium mb-8`}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }}></span>
+              {data.jobTitle || 'Software Engineer'}
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] mb-6">
+              {data.name?.split(' ')[0] || 'Developer'}.<br/>
+              <span className="text-transparent bg-clip-text" style={{ backgroundImage: `linear-gradient(to right, ${primaryColor}, ${isDark ? '#fff' : '#000'})` }}>
+                Building the future.
+              </span>
+            </h1>
+            
+            <p className={`${textMuted} text-lg md:text-xl max-w-lg mb-10 leading-relaxed font-light`}>
+              {data.bio || "I engineer high-performance software architectures and design elegant user interfaces for the modern web."}
+            </p>
+            
+            <div className="flex items-center gap-4">
+              <button 
+                className="h-11 px-6 rounded-full text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center gap-2"
+                style={{ backgroundColor: isDark ? '#fff' : '#000', color: isDark ? '#000' : '#fff' }}
+                onClick={() => scrollTo('projects')}
+              >
+                Explore Work <FontAwesomeIcon icon={SolidIcons.faArrowRight} className="text-[10px]" />
+              </button>
+              {data.cvLink && (
+                <button 
+                  className={`h-11 px-6 rounded-full text-sm font-medium border ${borderSubtle} ${bgSub} hover:${borderHover} transition-all flex items-center gap-2`}
+                  onClick={() => window.open(data.cvLink, '_blank')}
+                >
+                  <FontAwesomeIcon icon={SolidIcons.faDownload} className="text-[12px]" /> Resume
+                </button>
+              )}
+            </div>
+          </motion.div>
+
+          <motion.div className="flex-1 w-full relative z-10" initial={{ opacity: 0, filter: 'blur(10px)' }} animate={{ opacity: 1, filter: 'blur(0px)' }} transition={{ duration: 1, delay: 0.2 }}>
+            <div className={`aspect-[4/3] rounded-3xl overflow-hidden border ${borderSubtle} ${bgSub} shadow-2xl relative p-2`}>
+              {data.heroImage ? (
+                <img src={data.heroImage} alt={data.name} className="w-full h-full object-cover rounded-2xl grayscale-[0.2] hover:grayscale-0 transition-all duration-700" />
+              ) : (
+                <div className="w-full h-full rounded-2xl flex items-center justify-center bg-gradient-to-tr from-black/5 to-black/20 dark:from-white/5 dark:to-white/10 relative overflow-hidden">
+                  <div className="absolute w-[200%] h-[200%] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [transform:rotate(-15deg)]"></div>
+                  <FontAwesomeIcon icon={SolidIcons.faCode} className="text-6xl opacity-20" />
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </section>
+
+        {/* 3. Skills Section */}
+        <section id="skills" className="relative z-10">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold tracking-tight mb-3">Technologies</h2>
+            <p className={`${textMuted} text-base`}>The tools and frameworks I use to build scalable products.</p>
+          </div>
+          
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {data.skills?.map((skill, i) => (
               <motion.div 
                 key={i} 
-                className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col items-center gap-4 group hover:border-indigo-500/50 transition-all"
-                whileHover={{ y: -5 }}
+                className={`flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border ${borderSubtle} ${bgSub} hover:${borderHover} transition-all group`}
+                whileHover={{ y: -4, boxShadow: `0 10px 30px -10px ${isDark ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.1)'}` }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
               >
-                <div style={{ color: accentColor }}>
-                  {skill.icon ? <DynamicIcon name={skill.icon} className="w-8 h-8" /> : <div className="w-4 h-4 rounded-full bg-current" />}
+                <div className={`text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:text-current ${textMuted}`} style={{ '--hover-color': primaryColor } as React.CSSProperties}>
+                  {skill.icon ? <DynamicIcon name={skill.icon} /> : <div className="w-4 h-4 bg-current rounded-full" />}
                 </div>
-                <span className="font-bold text-slate-300 text-xs uppercase tracking-widest">{skill.name}</span>
+                <span className="text-[12px] font-medium tracking-wide">{skill.name}</span>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 4. Services */}
-      <section id="services" className="py-32 max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-bold mb-20 text-center">Services<span style={{ color: accentColor }}>.</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data.services?.map((service, i) => (
-            <motion.div 
-              key={i} 
-              className="p-8 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-indigo-500/50 transition-all group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-indigo-500/10" style={{ color: accentColor }}>
-                {service.icon ? <DynamicIcon name={service.icon} className="w-6 h-6" /> : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4 4-4"/></svg>
-                )}
-              </div>
-              <h3 className="text-xl font-bold mb-4">{service.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+        {/* 4. Services Section */}
+        <section id="services" className="relative z-10">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold tracking-tight mb-3">Services</h2>
+            <p className={`${textMuted} text-base max-w-xl`}>Comprehensive solutions designed to solve complex technical challenges and drive business growth.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {data.services?.map((service, i) => (
+              <motion.div 
+                key={i} 
+                className={`relative p-8 rounded-3xl border ${borderSubtle} ${bgSub} group overflow-hidden`}
+                whileHover={{ y: -4 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 border ${borderSubtle} bg-white dark:bg-[#1A1A1A] text-xl shadow-sm`} style={{ color: primaryColor }}>
+                  {service.icon ? <DynamicIcon name={service.icon} /> : <FontAwesomeIcon icon={SolidIcons.faLayerGroup} />}
+                </div>
+                <h3 className="text-lg font-semibold mb-3 tracking-tight">{service.title}</h3>
+                <p className={`${textMuted} text-[14px] leading-relaxed`}>{service.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
 
-      {/* 5. Projects */}
-      <section id="projects" className="py-32 bg-slate-900/30">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-20">Selected Work<span style={{ color: accentColor }}>.</span></h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* 5. Projects Section (Direct Links, No Modal) */}
+        <section id="projects" className="relative z-10">
+          <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight mb-3">Selected Work</h2>
+              <p className={`${textMuted} text-base max-w-xl`}>A showcase of my recent engineering projects and architectural designs.</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {data.projects?.map((project, i) => (
               <motion.div 
                 key={i} 
-                className="group"
+                className={`group flex flex-col rounded-3xl border ${borderSubtle} ${bgSub} overflow-hidden hover:${borderHover} transition-all duration-300 hover:shadow-xl`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
                 viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
               >
-                <div className="aspect-video rounded-3xl overflow-hidden bg-slate-800 border border-slate-700 mb-8 relative">
+                <div className="aspect-[16/10] relative overflow-hidden bg-[#111] border-b border-black/5 dark:border-white/5">
                   <img 
-                    src={project.image || `https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800`} 
+                    src={project.image || `https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800`} 
                     alt={project.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transform scale-[1.01] group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]"
                   />
-                  <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                    {project.link && (
-                      <Button size="sm" style={{ backgroundColor: accentColor }} onClick={() => window.open(project.link, '_blank')}>View Project</Button>
-                    )}
-                  </div>
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.skills?.map((s, j) => (
-                    <span key={j} className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-slate-800 text-slate-400 rounded">{s}</span>
-                  ))}
+                
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-2xl font-bold tracking-tight">{project.title}</h3>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.skills?.map((s, j) => (
+                      <span key={j} className={`text-[11px] font-medium px-2.5 py-1 rounded-md border ${borderSubtle} ${isDark ? 'bg-white/5' : 'bg-black/5'}`}>
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className={`${textMuted} text-[14px] mb-8 leading-relaxed flex-1`}>{project.description}</p>
+                  
+                  {project.link && (
+                    <div className="pt-6 border-t border-current/10 mt-auto">
+                      <button 
+                        onClick={() => window.open(project.link, '_blank')}
+                        className={`inline-flex items-center gap-2 h-10 px-6 rounded-full text-sm font-semibold transition-transform hover:scale-[1.02] shadow-sm`}
+                        style={{ backgroundColor: primaryColor, color: '#fff' }}
+                      >
+                        View Project <FontAwesomeIcon icon={SolidIcons.faArrowRight} className="text-[10px]" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 6. Contact & Newsletter */}
-      <section id="contact" className="py-32 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <div>
-            <h2 className="text-6xl font-black mb-8 leading-tight">
-              {data.contact?.title ? (
-                <>
-                  {data.contact.title.split(' ').map((word, i, arr) => (
-                    <React.Fragment key={i}>
-                      {i === arr.length - 1 ? <span style={{ color: accentColor }}>{word}</span> : word}{' '}
-                    </React.Fragment>
-                  ))}
-                </>
-              ) : (
-                <>Let&apos;s start <br /> something <span style={{ color: accentColor }}>new.</span></>
-              )}
-            </h2>
-            <p className="text-slate-400 mb-12 text-lg max-w-md">
-              {data.contact?.description || "I am currently available for freelance work and full-time positions. Feel free to reach out!"}
-            </p>
-            
-            <div className="space-y-8">
-              {data.contact?.email && (
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xl" style={{ color: accentColor }}>
-                    <DynamicIcon name="faEnvelope" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Email Me</p>
-                    <p className="font-bold text-lg">{data.contact.email}</p>
-                  </div>
-                </div>
-              )}
-              {data.contact?.phone && (
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xl" style={{ color: accentColor }}>
-                    <DynamicIcon name="faPhone" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Call / WhatsApp</p>
-                    <p className="font-bold text-lg">{data.contact.phone}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+        {/* 6. Newsletter / CTA Section */}
+        <section id="newsletter" className="relative z-10">
+          <motion.div 
+            className="w-full rounded-[2rem] relative overflow-hidden flex flex-col items-center text-center p-12 md:p-24"
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Elegant Background for Newsletter */}
+            <div className={`absolute inset-0 z-0 opacity-40`} style={{ 
+              backgroundImage: `radial-gradient(circle at 50% -20%, ${primaryColor}60 0%, transparent 60%)` 
+            }}></div>
+            <div className={`absolute inset-0 border ${borderSubtle} rounded-[2rem] z-0`}></div>
+            <div className={`absolute inset-0 ${bgSub} -z-10`}></div>
 
-          <div className="p-10 rounded-[2.5rem] bg-slate-900/50 border border-slate-800 shadow-2xl relative overflow-hidden group flex flex-col justify-center">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/10 blur-[80px] group-hover:bg-indigo-600/20 transition-all"></div>
-            <div className="relative z-10 text-center space-y-6">
-              <h3 className="text-2xl font-bold">{data.newsletter?.title || 'Subscribe to my Newsletter'}</h3>
-              <p className="text-slate-400 text-sm">{data.newsletter?.description || 'Get the latest updates and news directly in your inbox.'}</p>
-              <form className="flex flex-col gap-4 mt-8" onSubmit={(e) => { e.preventDefault(); alert('Subscribed successfully!'); }}>
-                <input 
-                  type="email" 
-                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-2xl px-5 py-4 outline-none focus:border-indigo-500 transition-all text-center text-sm" 
-                  placeholder="Enter your email address" 
-                  required 
-                />
-                <Button className="w-full py-4 text-sm font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-indigo-500/20 transition-transform hover:scale-105" style={{ backgroundColor: accentColor, color: '#fff' }}>
-                  Subscribe
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Component */}
-      <footer className="pt-24 pb-12 border-t border-slate-900 mt-20 bg-slate-950">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
-            {/* Logo and Description */}
-            <div className="lg:col-span-2 space-y-6">
-              <a href="#" className="flex items-center gap-2 group mb-6">
-                {data.logoType === 'image' && data.logo ? (
-                  <img src={data.logo} alt="Logo" className="h-10 rounded" />
-                ) : (
-                  <>
-                    <div className="w-10 h-10 bg-[#0F121E] text-slate-950 rounded flex items-center justify-center font-black text-xl group-hover:rotate-12 transition-transform">
-                      {data.logo ? data.logo.charAt(0).toUpperCase() : 'P'}
-                    </div>
-                    <span className="font-black text-2xl tracking-tighter">{data.logo || 'Portfolify'}</span>
-                  </>
-                )}
-              </a>
-              <p className="text-slate-400 max-w-sm text-sm leading-relaxed">
-                {data.footer?.description || 'Empowering creators to showcase their best work with professional, high-end portfolios that launch in seconds.'}
+            <div className="relative z-10 max-w-2xl">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6">{data.newsletter?.title || "Let's build something."}</h2>
+              <p className={`${textMuted} text-lg mb-10 font-light`}>
+                {data.newsletter?.description || "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions."}
               </p>
-              <div className="flex gap-4 pt-4">
-                {Object.entries(data.socialLinks || {}).map(([key, value]) => (
-                  value && (
-                    <a key={key} href={value as string} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:-translate-y-1 hover:border-slate-600 transition-all group">
-                      <DynamicIcon name={`fa${key.charAt(0).toUpperCase()}${key.slice(1)}`} className="text-slate-400 group-hover:text-white transition-colors text-sm" />
-                    </a>
-                  )
-                ))}
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                {data.contact?.email && (
+                  <button 
+                    className="h-12 px-8 rounded-full text-sm font-semibold transition-transform hover:scale-[1.02] shadow-xl flex items-center justify-center gap-2"
+                    style={{ backgroundColor: isDark ? '#fff' : '#000', color: isDark ? '#000' : '#fff' }}
+                    onClick={() => window.location.href = `mailto:${data.contact?.email}`}
+                  >
+                    <FontAwesomeIcon icon={SolidIcons.faEnvelope} /> Email Me
+                  </button>
+                )}
+                {data.contact?.phone && (
+                  <button 
+                    className={`h-12 px-8 rounded-full text-sm font-medium border ${borderSubtle} ${bgMain} hover:${bgSub} transition-colors flex items-center justify-center gap-2`}
+                    onClick={() => window.open(`https://wa.me/${data.contact?.phone?.replace(/\D/g, '')}`, '_blank')}
+                  >
+                    <FontAwesomeIcon icon={BrandIcons.faWhatsapp} /> Chat
+                  </button>
+                )}
               </div>
             </div>
+          </motion.div>
+        </section>
 
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-black text-sm uppercase tracking-widest mb-6">Platform</h4>
-              <ul className="space-y-4">
-                {data.navbarLinks?.slice(0, Math.ceil((data.navbarLinks.length || 0) / 2)).map((link, i) => (
-                  <li key={i}>
-                    <a href={link.url} onClick={(e) => {
-                      if (link.url.startsWith('#')) {
-                        e.preventDefault();
-                        document.getElementById(link.url.substring(1))?.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }} className="text-slate-400 hover:text-white transition-colors text-sm">{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      </main>
 
-            {/* Additional Links */}
-            <div>
-              <h4 className="font-black text-sm uppercase tracking-widest mb-6">Company</h4>
-              <ul className="space-y-4">
-                {data.navbarLinks?.slice(Math.ceil((data.navbarLinks.length || 0) / 2)).map((link, i) => (
-                  <li key={i}>
-                    <a href={link.url} onClick={(e) => {
-                      if (link.url.startsWith('#')) {
-                        e.preventDefault();
-                        document.getElementById(link.url.substring(1))?.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }} className="text-slate-400 hover:text-white transition-colors text-sm">{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* 7. Footer */}
+      <footer className={`border-t ${borderSubtle} ${bgMain} py-12 px-6 md:px-12 relative z-10`}>
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          
+          <div className="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity cursor-pointer md:justify-start justify-center" onClick={() => scrollTo('hero')}>
+            {data.logoType === 'image' && data.logo ? (
+              <img src={data.logo} alt="Logo" className="h-6 w-auto object-contain grayscale" />
+            ) : (
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded flex items-center justify-center text-white" style={{ backgroundColor: primaryColor }}>
+                  <FontAwesomeIcon icon={SolidIcons.faTerminal} className="text-[10px]" />
+                </div>
+                <span className="font-bold text-sm tracking-tight">{data.logo || data.name}</span>
+              </div>
+            )}
           </div>
-
-          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-            <p>
-              {data.footer?.copyRight || `© ${new Date().getFullYear()} ${data.name || 'Portfolify Inc'}. All rights reserved.`}
-            </p>
+          
+          <div className="flex gap-6 md:justify-center justify-center">
+            {Object.entries(data.socialLinks || {}).map(([key, value]) => (
+              value && (
+                <a key={key} href={value as string} target="_blank" rel="noopener noreferrer" className={`${textMuted} hover:${textMain} transition-colors p-2`}>
+                  <DynamicIcon name={`fa${key.charAt(0).toUpperCase()}${key.slice(1)}`} className="text-[16px]" />
+                </a>
+              )
+            ))}
+          </div>
+          
+          <div className={`md:text-right text-center ${textMuted} text-[13px] font-medium`}>
+            {data.footer?.copyRight || `© ${new Date().getFullYear()} ${data.name}. All rights reserved.`}
           </div>
         </div>
       </footer>
