@@ -19,6 +19,18 @@ const TEMPLATES = [
     name: 'The Creative Artsy (Designer)',
     description: 'A beautiful serif-based layout with organic glows and asymmetric grids. Built for designers and copywriters.',
     image: 'from-pink-900 to-purple-950'
+  },
+  {
+    id: 'entrepreneur',
+    name: 'The Executive (Business)',
+    description: 'A clean, corporate design focusing on strategic vision and case studies. Ideal for founders and consultants.',
+    image: 'from-blue-900 to-slate-800'
+  },
+  {
+    id: 'contractor',
+    name: 'The Heavy Duty (Contracting)',
+    description: 'A bold, robust layout designed for construction, engineering, and physical project showcases.',
+    image: 'from-yellow-900 to-slate-900'
   }
 ];
 
